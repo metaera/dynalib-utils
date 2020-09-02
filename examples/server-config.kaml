@@ -1,0 +1,42 @@
+/*
+    This is the main configuration file for the Syvant Server.  It contains various settings for configuring operating parameters
+    and for specifying which standard plugins are loaded at system start-up.
+*/
+
+description: Main server configuration file
+type: server-config
+
+settings:
+    registered_user:     Ken Kopelson
+    data_path:           data
+    lob_subpath:         lob
+    ext_volume:          "/Volumes/Backup Plus"
+    ext_data_path:       Syvant
+    ext_lob_subpath:     lob
+    ip_addr:             '0.0.0.0'
+    port:                8084
+    log2con:             false
+    noprompt:            false
+    max_thing_pages:     100000
+    max_ref_pages:       100000
+    thing_purge_perc:    0.80
+    ref_purge_perc:      0.80
+
+config:
+    required_path: Load/Config/Required
+    auto_path:     Load/Config/Auto
+    required:
+        - {type: "struct-learn", file: "init-standard.kaml"}
+    auto: null
+
+plugins:
+    required_path: Load/Plugins/Required
+    auto_path:     Load/Plugins/Auto
+    required:
+        - ["libStructuredLearningPlugin.so", "structLearn"]
+        - {file: "libBoolWalkerPlugin.so",   name: "boolWalker"}
+//    auto:
+//        - ["libModelPlugin.so",    "model1"]
+//        - ["libDummyPlugin.so",    "dummy"]
+//        - ["libModelPlugin.so",    "model2"]
+//        - ["libModelPlugin.so",    "model3"]

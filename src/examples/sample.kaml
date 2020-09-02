@@ -1,0 +1,26 @@
+/* This is a sample KAML file with simple usage.  These types of /* comments */ are nestable. */
+
+hobbies:
+    -   title: Playing piano        // Shows how the map can begin on same line as the list element "-"
+        years: 53
+    -   title: Reading \            // Characters before the '\' are preserved, all white space after is not
+               Great \
+               Books
+        years: 55
+    -
+        title: Watching movies      // Or it can begin on any other line
+        years: 57
+
+settings:
+    name: Ken Kopelson
+    friend: "Brent Foust"
+    age: 59
+
+other:
+    // This demonstrates how lists can be embedded into other lists by using indenting
+    - ["this", "is", "a", "test"]
+        - ["with", "addons"]
+        - ["and", "features"]
+        - { a:5, b:6 }
+    - ["this", "is", "another", "test"]
+

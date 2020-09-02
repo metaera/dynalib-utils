@@ -1,0 +1,15 @@
+build*/
+node_modules/
+logs/
+~$*
+.history/
+*.dat
+*.o
+*.so
+*.dylib
+*.exe
+*.dll
+cppcheck-report.xml
+valgrind-report.xml
+
+.scannerwork/

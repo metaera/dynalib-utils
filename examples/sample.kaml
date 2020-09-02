@@ -1,0 +1,72 @@
+---
+This is one line of unquoted text that forms a list entry
+This is another line of text that forms another list entry:
+- This is the first list entry in the list block (3rd entry in parent list)
+- This is the 2nd entry in the list block
+
+---
+// The following map entry is attached to the top-level map block of the new document created by "---"
+test:
+    // The following entries create a map block, since each entry has a key
+    - elem1: 3
+    - elem2: '4'
+    - elem3: 5
+    - elem5: <bool>[ 4, 0, 7 ]      // These create a sub-list (array), since the entries have no key
+    - elem6: { a:4, b:6, c:7 }      // These create a sub-map, since the entries do have keys
+    - elem7:                        // This is the key to identify a sub-map, whose members immediately follow
+        - sub1: 45
+        - sub2: 67.67
+        - sub3: true
+        - sub5: This is an unquoted string \
+                with space folding on the next line
+        - sub6: "This is a quoted string
+                without space folding on next line"
+        - sub7: 'This is a single-quoted string \
+                with space folding on next line'
+        - sub8: null
+    - elem8:        // This map entry contains a list block value
+        - 4
+        - true
+        - "text string"
+    - elem9: [[ 4, 5, 6 ], [ 3, null, 9 ], [ 10, 11, 13 ]]    // This map element has a list of lists
+
+    /* For the above element, if you wanted to query the "7" in the second array, you would refer to as follows:
+        root[1]["test"]["elem9"][1][1].asInt()
+    */
+
+    - elem9_1:  { a2: sdlfkjalsdjf;j;fjjfljsjdf\
+                     4j345jljkkf777f77
+                  b2: salskdjfjjfjffjj\
+                     _b4789asdfjhaksjdh
+                  c2: |   These are several lines
+                      |
+                      |   all lined up to the same
+                      |   indent level
+                }
+
+    // The following is equivalent to 'elem9' just above
+    - elem10:
+        - [ 4, 5, 6 ]
+        - [ 3, null, 9 ]
+        - [ 10, 11, 13 ]
+    - elem11: <time>[ "2020-01-01T12:00:00", "2020-06-01T12:00:00" ]
+    - elem12: { a3:34, b3: <ts>"2020-01-01T01:01:01Z" }
+
+// This is one type of comment
+/* This is another type of comment */
+
+sample2:
+    - This is an entry in the array
+    - This is another entry
+    - This is a 3rd entry
+    - This is a 4th entry
+
+sample3:                                                 // This is a map, with three entries (nouns, verbs and settings)
+    - nouns: ['box', 'sky', 'car', 'truck', 'boat']        // This entry has a list (array)
+    - verbs: ['run', 'walk', 'fly', 'sleep', 'dive', 'fall', 'stand']    // This entry also has a list (array)
+    - settings: {a4:1, b4:2, c4:3}                         // This entry has a map
+
+/*
+The dash (-) starts an entry under the parent entry
+A block of entries are put into the same group as other entries at the same indent level
+*/
