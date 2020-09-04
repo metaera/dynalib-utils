@@ -11,10 +11,21 @@ hobbies:
         title: Watching movies      // Or it can begin on any other line
         years: 57
 
+hobbies:
+    #1  years: 40
+        favorite: true
+    #2  favorite: false
+    -   title: A new title
+        years: 28
+
 settings:
     name: Ken Kopelson
     friend: "Brent Foust"
     age: 59
+
+settings:
+    name: Bob Smith
+    prim: true
 
 other:
     // This demonstrates how lists can be embedded into other lists by using indenting
@@ -24,3 +35,6 @@ other:
         - { a:5, b:6 }
     - ["this", "is", "another", "test"]
 
+other:
+    #0 #5 #0 "also"
+    #0 #6 b:7

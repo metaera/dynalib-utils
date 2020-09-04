@@ -129,7 +129,7 @@ namespace KAML {
             }
             outStr += "}";
         }
-        else if (node.isNullPtr()) {
+        else if (node.isUntyped()) {
             outStr += node.asNullPtr();
         }
         else if (node.isScalar()) {

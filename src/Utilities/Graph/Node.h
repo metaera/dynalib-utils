@@ -11,8 +11,8 @@ using namespace std::chrono;
 #include "../IntWrapper.h"
 #include "../TimeUtils.h"
 
-#define MAKE_LOCAL_REF_NODE Node(NodeType::NULLPTR, false)
-#define NODE_GET_INIT Node _presult = Node(NodeType::NULLPTR, false)
+#define MAKE_LOCAL_REF_NODE Node(NodeType::UNTYPED, false)
+#define NODE_GET_INIT Node _presult = Node(NodeType::UNTYPED, false)
 #define NODE_GET_STR(N,K,V)     if (Node::present(N, K, _presult)) { V = _presult(); }
 #define NODE_GET_SEQ(N,K,V)     if (Node::present(N, K, _presult)) { V = _presult(); }
 #define NODE_GET_PROPER(N,K,V)  if (Node::present(N, K, _presult)) { V = _presult(); }
@@ -31,7 +31,7 @@ namespace Graph {
     MAKE_LISTTYPE_DEF(Node, Node);
     MAKE_MAPTYPE_DEF(String, Node, Node);
 
-    enum class NodeType { NULLPTR, SCALAR, LIST, MAP };
+    enum class NodeType { UNTYPED, SCALAR, LIST, MAP };
     enum class ScalarType { NONE, BOOL, INT, FLOAT, STRING, SEQ, PROPER, TIME, TIMESTAMP, DATE };
 
     union NodeValue {
@@ -61,7 +61,7 @@ namespace Graph {
     public:
         static bool present(const Node& node, const String& fldName, Node& result);
 
-        explicit Node(NodeType type = NodeType::NULLPTR, bool ownsData = true);
+        explicit Node(NodeType type = NodeType::UNTYPED, bool ownsData = true);
         virtual ~Node();
         Node(const Node& other);
         Node*      copy() override;
@@ -115,9 +115,9 @@ namespace Graph {
         Node&       operator+=(Time value);
         Node&       operator+=(Timestamp value);
 
-        static Node* newNullNode();
+        static Node* newUntypedNode();
 
-        const bool  isNullPtr() const;
+        const bool  isUntyped() const;
         const bool  isScalar() const;
         const bool  isList() const;
         const bool  isMap() const;
@@ -141,7 +141,7 @@ namespace Graph {
         const system_clock::time_point asDate() const;
 
         // These methods are used to set the type and value of this node
-        void  setNullNode();
+        void  setUntypedNode();
         void  setNode(const Node& other);
         void  setScalar(const char* value, ScalarType strType = ScalarType::STRING);
         void  setScalar(bool value);
@@ -152,9 +152,9 @@ namespace Graph {
         void  setMap();
 
         Node* addNode(Node* node);
-        Node* addNullNode();
+        Node* addUntypedNode();
         Node* addNode(const String& key, Node* node, bool append = true);
-        Node* addNullNode(const String& key, bool append = true);
+        Node* addUntypedNode(const String& key, bool append = true);
 
         // These methods are used to add a value to this node, ensuring this node is a list
         Node* addScalar(const char* value, ScalarType strType = ScalarType::STRING);

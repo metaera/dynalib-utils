@@ -1,0 +1,29 @@
+{
+    "env": {
+        "RUNNING_IN_IDE": "1"
+    },
+    "configurations": [
+        {
+            "name": "macOS",
+            "includePath": [
+                "${workspaceFolder}/src/**",
+                "/usr/local/include/**",
+                "/usr/local/lib"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/local/opt/llvm/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "browse": {
+                "path": ["${workspaceFolder}"],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}

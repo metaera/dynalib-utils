@@ -20,6 +20,12 @@ public:
     String getMessage() { return _msg; }
 };
 
+class MethodNotImplemented : public Exception {
+public:
+    MethodNotImplemented() : Exception() {};
+    explicit MethodNotImplemented(const String& msg) : Exception(msg) {}
+};
+
 class StrictViolationException : public Exception {
 public:
     StrictViolationException() : Exception() {};

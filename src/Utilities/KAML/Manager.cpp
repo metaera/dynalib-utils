@@ -46,6 +46,14 @@ namespace KAML {
         }
     }
 
+    File& Manager::loadFile(const String& fileName) {
+        return getInstance()->load(fileName);
+    }
+
+    void Manager::closeAllFiles() {
+        getInstance()->closeAll();
+    }
+
     void Manager::shutdown() {
         delete _fileMap;
         _fileMap = nullptr;
@@ -63,8 +71,8 @@ namespace KAML {
      * @param fileName 
      * @return File& 
      */
-    File& Manager::loadFile(const String& fileName) {
-        closeFile(fileName);
+    File& Manager::load(const String& fileName) {
+        close(fileName);
         auto*  file     = new File(fileName);
         String buf      = String();
         bool   result   = false;
@@ -99,12 +107,12 @@ namespace KAML {
      * @param fileName 
      * @return File* - nullptr if not found, othewise the File object
      */
-    File* Manager::findOpenedFile(const String& fileName) {
+    File* Manager::findOpened(const String& fileName) {
         return _fileMap->get(fileName);
     }
 
-    void Manager::closeFile(const String& fileName) {
-        auto* file = findOpenedFile(fileName);
+    void Manager::close(const String& fileName) {
+        auto* file = findOpened(fileName);
         if (file != nullptr) {
             file->close();
             _fileMap->deleteEntry(fileName);

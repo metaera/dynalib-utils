@@ -23,19 +23,20 @@
 #define BACKSLASH_CODE  BASE_USER_CODE + 12
 #define LT_CODE         BASE_USER_CODE + 13
 #define GT_CODE         BASE_USER_CODE + 14
-#define BREAK_CODE      BASE_USER_CODE + 15
-#define TRUE_CODE       BASE_USER_CODE + 16
-#define FALSE_CODE      BASE_USER_CODE + 17
-#define NULL_CODE       BASE_USER_CODE + 18
-#define STR_CODE        BASE_USER_CODE + 19
-#define SEQ_CODE        BASE_USER_CODE + 20
-#define PROPER_CODE     BASE_USER_CODE + 21
-#define INT_CODE        BASE_USER_CODE + 22
-#define FLOAT_CODE      BASE_USER_CODE + 23
-#define BOOL_CODE       BASE_USER_CODE + 24
-#define TIME_CODE       BASE_USER_CODE + 25
-#define TIMESTAMP_CODE  BASE_USER_CODE + 26
-#define DATE_CODE       BASE_USER_CODE + 27
+#define HASH_CODE       BASE_USER_CODE + 15
+#define BREAK_CODE      BASE_USER_CODE + 16
+#define TRUE_CODE       BASE_USER_CODE + 17
+#define FALSE_CODE      BASE_USER_CODE + 18
+#define NULL_CODE       BASE_USER_CODE + 19
+#define STR_CODE        BASE_USER_CODE + 20
+#define SEQ_CODE        BASE_USER_CODE + 21
+#define PROPER_CODE     BASE_USER_CODE + 22
+#define INT_CODE        BASE_USER_CODE + 23
+#define FLOAT_CODE      BASE_USER_CODE + 24
+#define BOOL_CODE       BASE_USER_CODE + 25
+#define TIME_CODE       BASE_USER_CODE + 26
+#define TIMESTAMP_CODE  BASE_USER_CODE + 27
+#define DATE_CODE       BASE_USER_CODE + 28
 
 using namespace KAML;
 
@@ -52,7 +53,7 @@ namespace KAML {
         _tok->setGetUnknown(false);
         _tok->setGetCharLits(false);
         _tok->addIdentChars(String("_"));
-        char ops[] = {'.', ',', '-', ':', ';', '[', ']', '{', '}', '@', '|', '\\', '<', '>'};
+        char ops[] = {'.', ',', '-', ':', ';', '[', ']', '{', '}', '@', '|', '\\', '<', '>', '#'};
         int  index = PERIOD_CODE;
         for (char ch : ops) {
             _tok->addSingleOp(new Char(ch), index++);
@@ -100,14 +101,14 @@ namespace KAML {
                 }
                 else if (token.type == TOK_TYPE_OPER) {
                     if (token.code == BREAK_CODE) {
-                        docNode = rootNode->addNullNode();
+                        docNode = rootNode->addUntypedNode();
                         _tok->fetchToken(token);
                         continue;
                     }
                 }
                 if (docNode == nullptr) {
                     // If no docNode has been added with "---", add a default one
-                    docNode = rootNode->addNullNode();
+                    docNode = rootNode->addUntypedNode();
                 }
                 if (!parseBlock(token, docNode, indentPos)) {
                     _tok->error("Parsing terminated prematurely");
@@ -188,9 +189,9 @@ namespace KAML {
                                 subNode = parentNode;
                             }
                         }
-                        else if (parentNode->isNullPtr()) {
+                        else if (parentNode->isUntyped()) {
                             parentNode->setList();
-                            subNode   = parentNode;
+                            subNode = parentNode;
                         }
                         if (subNode == nullptr) {
                             _tok->error("Invalid syntax - invalid parent for subnodes");
@@ -206,7 +207,54 @@ namespace KAML {
                     }
                     else {
                         _tok->fetchToken(token);
-                        if (!parseBlock(token, parentNode->addNullNode(), indentPos)) {
+                        if (!parseBlock(token, parentNode->addUntypedNode(), indentPos)) {
+                            if (_tok->isError()) {
+                                return false;
+                            }
+                        }
+                        continue;
+                    }
+                }
+                else if (token.code == HASH_CODE) {
+                    int savePos = token.linePosition;
+                    auto* state = _tok->saveState();
+                    int index = 0;
+                    _tok->fetchToken(token);
+                    if (token.type == TOK_TYPE_INT_LIT) {
+                        index = token.intPortion;
+                        _tok->fetchToken(token);
+                    }
+                    else {
+                        _tok->restoreState(state);
+                    }
+                    if (_tok->hasIndented(indentPos)) {
+                        Node* subNode = nullptr;
+                        if (parentNode->isList()) {
+                            Node* temp = (*parentNode)(index);
+                            if (temp != nullptr) {
+                                subNode = temp;
+                            }
+                        }
+                        if (subNode == nullptr) {
+                            _tok->error("Invalid syntax - invalid parent for subnodes");
+                            return false;
+                        }
+                        indentPos = savePos;
+                        if (!parseBlock(token, subNode, indentPos)) {
+                            if (_tok->isError()) {
+                                return false;
+                            }
+                        }
+                        continue;
+                    }
+                    else {
+                        _tok->fetchToken(token);
+                        auto* node = parentNode->isList() ? (*parentNode)(index) : nullptr;
+                        if (node == nullptr) {
+                            // If it's not there, add a new unTyped node at the key specified...
+                            node = parentNode->addUntypedNode();
+                        }
+                        if (!parseBlock(token, node, indentPos)) {
                             if (_tok->isError()) {
                                 return false;
                             }
@@ -229,9 +277,13 @@ namespace KAML {
                     _tok->deleteState(state);
                     _tok->fetchToken(token);
                     indentPos = savePos;
-                    // If a key is found, then add it with a new "null node" as the value into the parentNode map
-                    if (!parseBlock(token, parentNode->addNullNode(key), indentPos)) {
-//                    if (!parseBlock(token, parentNode->addNullNode(key), token.linePosition)) {
+                    // Look for the key to see if the user is trying to edit an existing value...
+                    auto* node = parentNode->isMap() ? (*parentNode)(key) : nullptr;
+                    if (node == nullptr) {
+                        // If it's not there, add a new unTyped node at the key specified...
+                        node = parentNode->addUntypedNode(key);
+                    }
+                    if (!parseBlock(token, node, indentPos)) {
                         return false;
                     }
                     continue;
@@ -380,7 +432,7 @@ namespace KAML {
 
         if (valueNode == nullptr) {
             if (parentNode->isList()) {
-                valueNode = parentNode->addNullNode();
+                valueNode = parentNode->addUntypedNode();
             }
             else {
                 valueNode = parentNode;
@@ -451,7 +503,7 @@ namespace KAML {
                 keyFound = true;
 
                 // If a key is found, then add it with a new "null node" as the value into the parentNode map
-                valueNode = parentNode->addNullNode(key);
+                valueNode = parentNode->addUntypedNode(key);
             }
             else {
                 // No map key was found so restart the token scan from the ident/string
@@ -460,7 +512,7 @@ namespace KAML {
         }
         if (valueNode == nullptr) {
             if (parentNode->isList()) {
-                valueNode = parentNode->addNullNode();
+                valueNode = parentNode->addUntypedNode();
             }
             else {
                 valueNode = parentNode;
@@ -596,7 +648,7 @@ namespace KAML {
                         scalarNode->setScalar(token.boolValue);
                     }
                     else if (token.code == NULL_CODE) {
-                        scalarNode->setNullNode();
+                        scalarNode->setUntypedNode();
                     }
                     _tok->fetchToken(token);
                     result = true;

@@ -126,7 +126,7 @@ namespace KAML {
                             break;
                     }
                 }
-                valueNode = parentNode->addNullNode();
+                valueNode = parentNode->addUntypedNode();
                 result = parseValue(token, valueNode);
                 if (!result) {
                     break;
@@ -165,7 +165,7 @@ namespace KAML {
                     _tok->fetchToken(token);
                     if (token.type == TOK_TYPE_OPER && token.code == COLON_CODE) {
                         _tok->fetchToken(token);
-                        valueNode = parentNode->addNullNode(key);
+                        valueNode = parentNode->addUntypedNode(key);
                     }
                     else {
                         break;
@@ -266,7 +266,7 @@ namespace KAML {
                     scalarNode->setScalar(token.boolValue);
                 }
                 else if (token.code == NULL_CODE) {
-                    scalarNode->setNullNode();
+                    scalarNode->setUntypedNode();
                 }
                 _tok->fetchToken(token);
                 result = true;

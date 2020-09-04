@@ -16,6 +16,9 @@
 #include "Utilities/DynaArrayImpl.h"
 #include "Utilities/DynaHashMapImpl.h"
 #include "Utilities/DynaHashSetImpl.h"
+#include "Utilities/ICacheConst.h"
+
+MAKE_ARRAYTYPE_INSTANCE(index_t, Index);
 
 class String;
 

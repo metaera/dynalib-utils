@@ -23,7 +23,7 @@ namespace Graph {
     }
 
     Node::Node(NodeType nodeType, bool ownsData) : _ownsData(true), _key(nullptr) {
-        _nodeType   = NodeType::NULLPTR;
+        _nodeType   = NodeType::UNTYPED;
         _scalarType = ScalarType::NONE;
         setOwnsData(ownsData);
         _ensureNodeType(nodeType);
@@ -57,7 +57,7 @@ namespace Graph {
         _nodeType   = other._nodeType;
         _scalarType = other._scalarType;
         switch (_nodeType) {
-            case NodeType::NULLPTR: {
+            case NodeType::UNTYPED: {
                 break;
             }
             case NodeType::SCALAR: {
@@ -105,7 +105,7 @@ namespace Graph {
 
     void Node::_reset() {
         switch (_nodeType) {
-            case NodeType::NULLPTR: {
+            case NodeType::UNTYPED: {
                 break;
             }
             case NodeType::SCALAR: {
@@ -147,7 +147,7 @@ namespace Graph {
     }
 
     void Node::_ensureNodeType(NodeType nodeType) {
-        if (_nodeType == NodeType::NULLPTR) {
+        if (_nodeType == NodeType::UNTYPED) {
             _nodeType   = nodeType;
             _scalarType = ScalarType::NONE;
             if (_nodeType == NodeType::LIST) {
@@ -162,8 +162,8 @@ namespace Graph {
         }
     }
 
-    Node* Node::newNullNode() {
-        return new Node(NodeType::NULLPTR);
+    Node* Node::newUntypedNode() {
+        return new Node(NodeType::UNTYPED);
     }
 
     String* Node::key() const {
@@ -183,7 +183,7 @@ namespace Graph {
     }
 
     Node& Node::reset() {
-        setNullNode();
+        setUntypedNode();
         return *this;
     }
 
@@ -246,7 +246,7 @@ namespace Graph {
         auto* val = listElem(index);
         if (val == nullptr) {
             if (index == _value.listValue->getCount()) {
-                val = addNullNode();
+                val = addUntypedNode();
             }
             else {
                 return *(listElem(index, true));
@@ -263,7 +263,7 @@ namespace Graph {
         _ensureNodeType(NodeType::MAP);
         auto* val = mapElem(key);
         if (val == nullptr) {
-            val = addNullNode(key);
+            val = addUntypedNode(key);
         }
         return *val;
     }
@@ -283,7 +283,7 @@ namespace Graph {
     }
 
     Node& Node::operator=(nullptr_t value) {
-        setNullNode();
+        setUntypedNode();
         return *this;
     }
 
@@ -344,7 +344,7 @@ namespace Graph {
     }
 
     Node& Node::operator+=(nullptr_t value) {
-        addNullNode();
+        addUntypedNode();
         return *this;
     }
 
@@ -408,7 +408,7 @@ namespace Graph {
                 if (valueNode != nullptr) {
                     if (!valueNode->isList()) {
                         // Not a List, so encase the existing value into a new List
-                        auto* listNode = newNullNode();
+                        auto* listNode = newUntypedNode();
                         // Append the old value node to the new List
                         listNode->addNode(valueNode);
                         // Now point the valueNode variable to refer to the List
@@ -423,8 +423,8 @@ namespace Graph {
         return node;
     }
 
-    const bool Node::isNullPtr() const {
-        return _nodeType == NodeType::NULLPTR;
+    const bool Node::isUntyped() const {
+        return _nodeType == NodeType::UNTYPED;
     }
 
     const bool Node::isScalar() const {
@@ -477,7 +477,7 @@ namespace Graph {
 
     const String Node::asString() const {
         String result = "";
-        if (_nodeType == NodeType::NULLPTR) {
+        if (_nodeType == NodeType::UNTYPED) {
             result = "null";
         }
         else if (_nodeType == NodeType::SCALAR) {
@@ -644,7 +644,7 @@ namespace Graph {
 
     const String Node::asNullPtr() const {
         String result = "";
-        if (_nodeType == NodeType::NULLPTR) {
+        if (_nodeType == NodeType::UNTYPED) {
             result = "null";
         }
         return result;
@@ -770,9 +770,9 @@ namespace Graph {
         return result;
     }
 
-    void Node::setNullNode() {
+    void Node::setUntypedNode() {
         _reset();
-        _nodeType   = NodeType::NULLPTR;
+        _nodeType   = NodeType::UNTYPED;
         _scalarType = ScalarType::NONE;
     }
 
@@ -834,98 +834,98 @@ namespace Graph {
         return _addToList(node);
     }
 
-    Node* Node::addNullNode() {
-        return _addToList(newNullNode());
+    Node* Node::addUntypedNode() {
+        return _addToList(newUntypedNode());
     }
 
     Node* Node::addNode(const String& key, Node* node, bool append) {
         return _addToMap(key, node, append);
     }
 
-    Node* Node::addNullNode(const String& key, bool append) {
-        return _addToMap(key, newNullNode(), append);
+    Node* Node::addUntypedNode(const String& key, bool append) {
+        return _addToMap(key, newUntypedNode(), append);
     }
 
     Node* Node::addScalar(const char* value, ScalarType strType) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value, strType);
         return addNode(node);
     }
 
     Node* Node::addScalar(long long value) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value);
         return addNode(node);
     }
 
     Node* Node::addScalar(double value) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value);
         return addNode(node);
     }
 
     Node* Node::addScalar(bool value) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value);
         return addNode(node);
     }
 
     Node* Node::addScalar(system_clock::time_point& value, ScalarType timeType) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value, timeType);
         return addNode(node);
     }
 
     Node* Node::addList() {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setList();
         return addNode(node);
     }
 
     Node* Node::addMap() {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setMap();
         return addNode(node);
     }
 
     Node* Node::addScalar(const String& key, const char* value, ScalarType strType) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value, strType);
         return addNode(key, node);
     }
 
     Node* Node::addScalar(const String& key, long long value) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value);
         return addNode(key, node);
     }
 
     Node* Node::addScalar(const String& key, double value) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value);
         return addNode(key, node);
     }
 
     Node* Node::addScalar(const String& key, bool value) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value);
         return addNode(key, node);
     }
 
     Node* Node::addScalar(const String& key, system_clock::time_point& value, ScalarType timeType) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setScalar(value, timeType);
         return addNode(key, node);
     }
 
     Node* Node::addList(const String& key) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setList();
         return addNode(key, node);
     }
 
     Node* Node::addMap(const String& key) {
-        auto* node = newNullNode();
+        auto* node = newUntypedNode();
         node->setMap();
         return addNode(key, node);
     }

@@ -38,6 +38,7 @@ namespace KAML {
 
         // void    setRootNode(Node* rootNode);
         Node&   getRootNode();
+        Node&   getDoc(int index = 0);
 
         int hashCode() const override;
         bool operator== (const File &other) const override;

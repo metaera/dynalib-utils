@@ -30,14 +30,16 @@ namespace KAML {
     public:
         static Manager* getInstance();
         static void     deleteInstance();
+        static File&    loadFile(const String& fileName);
+        static void     closeAllFiles();
 
         virtual ~Manager();
 
         void   shutdown();
         File&  createNewFile(const String& fileName);
-        File&  loadFile(const String& fileName);
-        File*  findOpenedFile(const String& fileName);
-        void   closeFile(const String& fileName);
+        File&  load(const String& fileName);
+        File*  findOpened(const String& fileName);
+        void   close(const String& fileName);
         bool   parseKAML(String& kamlStr, Node* rootNode);
         bool   parseJSON(String& jsonStr, Node* rootNode);
         String genJSON(Node& node, bool pretty = false);

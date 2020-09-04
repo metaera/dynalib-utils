@@ -1,16 +1,15 @@
 #include "../Utilities/KAML/KAML.h"
 
+using Config = KAML::Manager;
+
 int main(int argc, char* argv[]) {
     try {
-        auto* kaml = KAML::Manager::getInstance();
-
         /**
-         * The following call to loadFile load and parse the file, either with KAML or JSON, depending on the file extension
+         * The following call to load load and parse the file, either with KAML or JSON, depending on the file extension
          * of ".kaml" or ".json"
          */
-        auto& file = kaml->loadFile("sample.kaml");
-        auto& root = file.getRootNode();
-        auto& doc  = root[0];       // First document in root, always added
+        auto& file = Config::loadFile("sample.kaml");
+        auto& doc  = file.getDoc();    // First document in root, always added
 
         // This "settings" node is "const", so it is required to be there, and will except if not
         const auto& settings = doc["settings"];
@@ -26,7 +25,7 @@ int main(int argc, char* argv[]) {
          * add a new hobby to the node structure, and print out the revised hobby list.  If you
          * comment out the entire hobby list from the file (and make sure to copy the file to the build
          * directory), this will still work because of the line that checks if the hobbies node is
-         * a NullPtr node, and if it is, it will set the node to be a list.
+         * a unTyped node, and if it is, it will set the node to be a list.
          * 
          */
         if (hobbies.isList()) {
@@ -35,7 +34,7 @@ int main(int argc, char* argv[]) {
             }
             cout << endl;
         }
-        if (hobbies.isNullPtr()) {
+        if (hobbies.isUntyped()) {
             // The "hobbies" node must have been commented out in the file, so let's make it a list.
             // You wouldn't have to do this except in the following section it checks to see if it is
             // a list, and also it gets the list length.
@@ -57,10 +56,10 @@ int main(int argc, char* argv[]) {
          */
         if (otherPtr != nullptr) {
             auto& other = *otherPtr;
-            cout << "Other: " << kaml->genJSON(other, true) << endl;
+            cout << "Other: " << Config::getInstance()->genJSON(other, true) << endl;
         }
 
-        cout << "Full: " << kaml->genJSON(root, true) << endl;
+        cout << "Full: " << Config::getInstance()->genJSON(doc, true) << endl;
     }
     catch (Exception& e) {
 

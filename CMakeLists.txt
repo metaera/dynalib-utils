@@ -7,7 +7,7 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 if (UNIX AND NOT APPLE)
     message(STATUS "Using Linux cross-compiling settings")
     set(CMAKE_SYSTEM_NAME Linux)
-    set(CMAKE_SYSTEM_PROCESSOR x86_64)
+    # set(CMAKE_SYSTEM_PROCESSOR x86_64)
     set(CLANG_DEFAULT_CXX_STDLIB libc++)
     set(CLANG_DEFAULT_C_STDLIB libc)
     set(CMAKE_C_COMPILER clang)
@@ -47,7 +47,6 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 set(CMAKE_SKIP_BUILD_RPATH FALSE)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-set(CMAKE_INSTALL_PREFIX "")
 set(CMAKE_INSTALL_RPATH "../lib")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
@@ -74,6 +73,7 @@ set(UTIL_SOURCES
     ${UTILS_SOURCE_DIR}/DynaLogger.cpp
     ${UTILS_SOURCE_DIR}/DynaSort.cpp
     ${UTILS_SOURCE_DIR}/DynaList.cpp
+    ${UTILS_SOURCE_DIR}/DynaBTree.cpp
     ${UTILS_SOURCE_DIR}/CheckForError.cpp
     ${UTILS_SOURCE_DIR}/DynaRingBuffer.cpp
     ${UTILS_SOURCE_DIR}/DynaAlloc.cpp
@@ -109,6 +109,8 @@ set(UTIL_SOURCES
 
 set(UTIL_INCLUDES
     ${UTILS_SOURCE_DIR}/Utils.h
+    ${UTILS_SOURCE_DIR}/BitManip.h
+    ${UTILS_SOURCE_DIR}/Exception.h
     ${UTILS_SOURCE_DIR}/FileUtils.h
     ${UTILS_SOURCE_DIR}/Position.h
     ${UTILS_SOURCE_DIR}/Stopwatch.h
@@ -124,6 +126,7 @@ set(UTIL_INCLUDES
     ${UTILS_SOURCE_DIR}/DynaSort.h
     ${UTILS_SOURCE_DIR}/DynaSortImpl.h
     ${UTILS_SOURCE_DIR}/DynaList.h
+    ${UTILS_SOURCE_DIR}/DynaBTree.h
     ${UTILS_SOURCE_DIR}/DynaListImpl.h
     ${UTILS_SOURCE_DIR}/CheckForError.h
     ${UTILS_SOURCE_DIR}/DynaRingBuffer.h
@@ -153,27 +156,44 @@ set(UTIL_INCLUDES
     ${UTILS_SOURCE_DIR}/String.h
     ${UTILS_SOURCE_DIR}/StringWrapper.h
     ${UTILS_SOURCE_DIR}/TimeUtils.h
+    ${UTILS_SOURCE_DIR}/TypeDefs.h
     ${UTILS_SOURCE_DIR}/PrintUtils.h
     ${UTILS_SOURCE_DIR}/DynaHashSet.h
     ${UTILS_SOURCE_DIR}/DynaHashSetImpl.h
     ${UTILS_SOURCE_DIR}/DynaLinkedList.h
     ${UTILS_SOURCE_DIR}/DynaLinkedListImpl.h
+    ${UTILS_SOURCE_DIR}/DynaEventTable.h
+    ${UTILS_SOURCE_DIR}/UUID.h
+)
+
+set(GRAPH_INCLUDES
     ${UTILS_SOURCE_DIR}/Graph/Node.h
+)
+
+set(PARSER_INCLUDES
+    ${UTILS_SOURCE_DIR}/Parser/Tokenizer.h
+    ${UTILS_SOURCE_DIR}/Parser/Token.h
+    ${UTILS_SOURCE_DIR}/Parser/TokenizerContext.h
+    ${UTILS_SOURCE_DIR}/Parser/CharacterClass.h
+    ${UTILS_SOURCE_DIR}/Parser/ErrorContext.h
+)
+
+set(KAML_INCLUDES
     ${UTILS_SOURCE_DIR}/KAML/Manager.h
     ${UTILS_SOURCE_DIR}/KAML/File.h
     ${UTILS_SOURCE_DIR}/KAML/KAMLParser.h
     ${UTILS_SOURCE_DIR}/KAML/JSONParser.h
     ${UTILS_SOURCE_DIR}/KAML/JSONGenerator.h
-    ${UTILS_SOURCE_DIR}/Parser/Tokenizer.h
-    ${UTILS_SOURCE_DIR}/Parser/Token.h
-    ${UTILS_SOURCE_DIR}/Parser/TokenizerContext.h
-    ${UTILS_SOURCE_DIR}/Parser/CharacterClass.h
+)
+
+set(DATE_INCLUDES
     ${UTILS_SOURCE_DIR}/date/tz.h
-    ${UTILS_SOURCE_DIR}/DynaEventTable.h
+)
+
+set(CRYPTO_INCLUDES
     ${UTILS_SOURCE_DIR}/crypto/ISAAC64Random.h
     ${UTILS_SOURCE_DIR}/crypto/ISAACRandom.h
     ${UTILS_SOURCE_DIR}/crypto/SHA256.h
-    ${UTILS_SOURCE_DIR}/UUID.h
 )
 
 # Specify the libraries that will be linked in
@@ -185,5 +205,17 @@ set_target_properties(dynalib-utils PROPERTIES VERSION ${PROJECT_VERSION} SOVERS
 # Link each of the libraries
 target_link_libraries(dynalib-utils ${CURL_LIBRARIES})
 
-install(TARGETS dynalib-utils LIBRARY DESTINATION usr/local/lib)
-install(FILES ${UTIL_INCLUDES} DESTINATION usr/local/include/dynalib)
+# Build the test executable
+add_executable(simpleUse ${TOP_SOURCE_DIR}/examples/simpleUse.cpp)
+target_link_libraries(simpleUse PUBLIC dynalib-utils)
+
+add_custom_target(TARGET simpleUse POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${TOP_SOURCE_DIR}/examples/sample.kaml ${CMAKE_CURRENT_BINARY_DIR}/sample.kaml)
+
+install(TARGETS dynalib-utils LIBRARY DESTINATION lib)
+install(FILES ${UTIL_INCLUDES} DESTINATION include/dynalib)
+install(FILES ${GRAPH_INCLUDES} DESTINATION include/dynalib/Graph)
+install(FILES ${PARSER_INCLUDES} DESTINATION include/dynalib/Parser)
+install(FILES ${KAML_INCLUDES} DESTINATION include/dynalib/KAML)
+install(FILES ${DATE_INCLUDES} DESTINATION include/dynalib/date)
+install(FILES ${CRYPTO_INCLUDES} DESTINATION include/dynalib/crypto)

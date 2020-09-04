@@ -21,7 +21,7 @@ namespace KAML {
 
 
     File::File() {
-        _rootNode = new Node(NodeType::NULLPTR);
+        _rootNode = new Node(NodeType::UNTYPED);
         _rootNode->setList();
         _fileName = nullptr;
     }
@@ -111,6 +111,10 @@ namespace KAML {
 
     Node& File::getRootNode() {
         return *_rootNode;
+    }
+
+    Node& File::getDoc(int index) {
+        return (*_rootNode)[index];
     }
 
     int File::hashCode() const {
