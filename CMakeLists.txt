@@ -194,6 +194,7 @@ set(CRYPTO_INCLUDES
     ${UTILS_SOURCE_DIR}/crypto/ISAAC64Random.h
     ${UTILS_SOURCE_DIR}/crypto/ISAACRandom.h
     ${UTILS_SOURCE_DIR}/crypto/SHA256.h
+    ${UTILS_SOURCE_DIR}/crypto/standard.h
 )
 
 # Specify the libraries that will be linked in

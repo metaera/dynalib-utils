@@ -1,5 +1,12 @@
 /* This is a sample KAML file with simple usage.  These types of /* comments */ are nestable. */
 
+config:
+    required_path: Load/Config/Required
+    auto_path:     Load/Config/Auto
+    required:
+        - {type: "struct-learn", file: "init-standard.kaml"}
+    auto: - ["test.so", "test" ]
+
 hobbies:
     -   title: Playing piano        // Shows how the map can begin on same line as the list element "-"
         years: 53
@@ -27,6 +34,17 @@ settings:
     name: Bob Smith
     prim: true
 
+weird:
+    - 34
+    -
+        - 12
+        - 13
+        -   
+            - 18
+            - 19
+        - 25
+    - 89
+
 other:
     // This demonstrates how lists can be embedded into other lists by using indenting
     - ["this", "is", "a", "test"]
@@ -37,4 +55,12 @@ other:
 
 other:
     #0 #5 #0 "also"
+    #0 #5 "test this"
+    #0 #5 #0 ["First","Last"]
+    #0 #5 #0 ["John","Smith"]
+    #0 #5 #0 ["Tom","Jones"]
+    #0 #5 #0 ["Boris","Harold"]
+    #0 #5 #0 {f:"Ken", l:"Kopelson"}
     #0 #6 b:7
+    #1 #1 "was"
+

@@ -110,7 +110,7 @@ namespace KAML {
                     // If no docNode has been added with "---", add a default one
                     docNode = rootNode->addUntypedNode();
                 }
-                if (!parseBlock(token, docNode, indentPos)) {
+                if (!parseBlock(token, docNode, indentPos, 0)) {
                     _tok->error("Parsing terminated prematurely");
                     return false;
                 }
@@ -160,16 +160,22 @@ namespace KAML {
  */
 
 
-    bool KAMLParser::parseBlock(Token& token, Node* parentNode, int parentIndent) {
+    bool KAMLParser::parseBlock(Token& token, Node* parentNode, int parentIndent, int level) {
         auto indentPos = parentIndent;
+        #ifdef DEBUG
+        cout << "Enter block at line: " << token.lineNumber << ", indent: " << indentPos << ", level: " << level << endl;
+        #endif
         while (!_unwind) {
-            #ifdef DEBUG
-                cout << "parseBlock: token line: " << token.lineNumber << ", pos: " << token.linePosition << endl;
-            #endif
+            if (token.lineNumber == 51) {
+                int i = 0;
+            }
             if (token.type == TOK_TYPE_SPECIAL && token.code == EOS_CODE) {
                 break;
             }
             if (_tok->hasOutdented(indentPos)) {
+                #ifdef DEBUG
+                cout << "Outdented from: " << indentPos << endl;
+                #endif
                 break;
             }
             if (token.type == TOK_TYPE_OPER) {
@@ -178,7 +184,14 @@ namespace KAML {
                     break;
                 }
                 if (token.code == DASH_CODE) {
+                    #ifdef DEBUG
+                    cout << "Dash code at: " << token.linePosition << endl;
+                    #endif
                     if (_tok->hasIndented(indentPos)) {
+                        auto savePos = token.linePosition;
+                        #ifdef DEBUG
+                        cout << "Indented from: " << indentPos << endl;
+                        #endif
                         Node* subNode = nullptr;
                         if (parentNode->isList()) {
                             Node* temp = parentNode->list().last();
@@ -192,31 +205,55 @@ namespace KAML {
                         else if (parentNode->isUntyped()) {
                             parentNode->setList();
                             subNode = parentNode;
+                            indentPos = savePos;
                         }
                         if (subNode == nullptr) {
                             _tok->error("Invalid syntax - invalid parent for subnodes");
                             return false;
                         }
-                        indentPos = token.linePosition;
-                        if (!parseBlock(token, subNode, indentPos)) {
+                        /**
+                         * This call to parseBlock is for the purpose of starting a new list node, or the
+                         * continuation of a parent list by adding sub-lists to it.  When this call executes
+                         * the called function will go to the parseBlock below, since the indent level will be zero.
+                         */
+                        #ifdef DEBUG
+                        cout << endl << "  Calling PB1: " << savePos << endl;
+                        #endif
+                        if (!parseBlock(token, subNode, savePos, level + 1)) {
                             if (_tok->isError()) {
                                 return false;
                             }
+                        }
+                        #ifdef DEBUG
+                        cout << "  Returned from PB1, indent: " << indentPos << ", save: " << savePos << endl;
+                        cout << "  Returned to Level: " << level << endl;
+                        #endif
+                        if (level == 1) {
+                            break;      // Return to level 0
                         }
                         continue;
                     }
                     else {
                         _tok->fetchToken(token);
-                        if (!parseBlock(token, parentNode->addUntypedNode(), indentPos)) {
+                        /**
+                         * This parseBlock will actually add new entries to the list node (parentNode), ultimately
+                         * calling parseBlockValue.
+                         */
+                        #ifdef DEBUG
+                        cout << endl << "    Calling PB2: " << indentPos << endl;
+                        #endif
+                        if (!parseBlock(token, parentNode->addUntypedNode(), indentPos, level)) {
                             if (_tok->isError()) {
                                 return false;
                             }
                         }
+                        #ifdef DEBUG
+                        cout << "    Returned from PB2" << endl;
+                        #endif
                         continue;
                     }
                 }
                 else if (token.code == HASH_CODE) {
-                    int savePos = token.linePosition;
                     auto* state = _tok->saveState();
                     int index = 0;
                     _tok->fetchToken(token);
@@ -228,6 +265,7 @@ namespace KAML {
                         _tok->restoreState(state);
                     }
                     if (_tok->hasIndented(indentPos)) {
+                        auto  savePos = token.linePosition;
                         Node* subNode = nullptr;
                         if (parentNode->isList()) {
                             Node* temp = (*parentNode)(index);
@@ -236,25 +274,27 @@ namespace KAML {
                             }
                         }
                         if (subNode == nullptr) {
-                            _tok->error("Invalid syntax - invalid parent for subnodes");
+                            _tok->error("Invalid syntax - invalid node specified");
                             return false;
                         }
-                        indentPos = savePos;
-                        if (!parseBlock(token, subNode, indentPos)) {
+                        if (!parseBlock(token, subNode, savePos, level + 1)) {
                             if (_tok->isError()) {
                                 return false;
                             }
                         }
+                        // if (level == 1) {
+                        //     break;      // Return to level 0
+                        // }
                         continue;
                     }
                     else {
                         _tok->fetchToken(token);
                         auto* node = parentNode->isList() ? (*parentNode)(index) : nullptr;
                         if (node == nullptr) {
-                            // If it's not there, add a new unTyped node at the key specified...
+                            // If it's not there, or not a list, add a new unTyped node into the parent...
                             node = parentNode->addUntypedNode();
                         }
-                        if (!parseBlock(token, node, indentPos)) {
+                        if (!parseBlock(token, node, indentPos, level)) {
                             if (_tok->isError()) {
                                 return false;
                             }
@@ -264,9 +304,12 @@ namespace KAML {
                 }
             }
             else if (token.type == TOK_TYPE_IDENT || token.type == TOK_TYPE_STRING || token.type == TOK_TYPE_STRING_LIT) {
-                int   savePos  = token.linePosition;
-                auto* state    = _tok->saveState();
-                auto  key      = token.getBuffer();
+                #ifdef DEBUG
+                cout << "Ident at line pos: " << token.linePosition << endl;
+                #endif
+                int   savePos     = token.linePosition;
+                auto* state       = _tok->saveState();
+                auto  key         = token.getBuffer();
                 /**
                  * @brief skip CRLFs/Spaces then check for ":" to see if we have a map entry
                  */
@@ -283,9 +326,15 @@ namespace KAML {
                         // If it's not there, add a new unTyped node at the key specified...
                         node = parentNode->addUntypedNode(key);
                     }
-                    if (!parseBlock(token, node, indentPos)) {
+                    #ifdef DEBUG
+                    cout << endl << "Calling PB0: " << savePos << endl;
+                    #endif
+                    if (!parseBlock(token, node, savePos, level + 1)) {
                         return false;
                     }
+                    #ifdef DEBUG
+                    cout << "Returned from PB0...continue loop" << endl;
+                    #endif
                     continue;
                 }
                 else {
@@ -293,7 +342,10 @@ namespace KAML {
                     _tok->restoreState(state);
                 }
             }
-            if (!parseBlockValue(token, parentNode)) {
+            #ifdef DEBUG
+            cout << "  >>> Parsing block value" << endl;
+            #endif
+            if (!parseBlockValue(token, parentNode, level)) {
                 if (_tok->isError()) {
                     return false;
                 }
@@ -422,7 +474,7 @@ namespace KAML {
      * @param parentNode this must be a list or map
      * @return parse result (true - parse was successful, false - parse failed)
      */
-    bool KAMLParser::parseBlockValue(Token& token, Node* parentNode) {
+    bool KAMLParser::parseBlockValue(Token& token, Node* parentNode, int level) {
         bool  result = false;
         CastType saveCast = _currCast;
         bool timeFound = false;
@@ -459,7 +511,7 @@ namespace KAML {
                     _tok->setIndentHere();
                 }
                 _tok->fetchToken(token);
-                result = parseBlock(token, valueNode, true);
+                result = parseBlock(token, valueNode, true, level + 1);
                 _currCast = saveCast;
                 return result;
             }

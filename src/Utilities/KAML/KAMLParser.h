@@ -29,10 +29,10 @@ namespace KAML {
         Tokenizer* getTok();
 
         bool  parseKaml(const String& buf, Node* rootNode);
-        bool  parseBlock(Token& token, Node* parentNode, int parentIndent);
+        bool  parseBlock(Token& token, Node* parentNode, int parentIndent, int level);
         bool  parseTypeCast(Token& token);
         void  applyTypeCast(Node* valueNode);
-        bool  parseBlockValue(Token& token, Node* parentNode);
+        bool  parseBlockValue(Token& token, Node* parentNode, int level);
         bool  parseFlowValue(Token& token, Node* parentNode);
         bool  parseFlowList(Token& token, Node* parentNode);
         bool  parseFlowMap(Token& token, Node* parentNode);
