@@ -208,14 +208,14 @@ set_target_properties(dynalib-utils PROPERTIES VERSION ${PROJECT_VERSION} SOVERS
 target_link_libraries(dynalib-utils ${CURL_LIBRARIES})
 
 # Build the test executable
-add_executable(simpleUse ${TOP_SOURCE_DIR}/examples/simpleUse.cpp)
-target_link_libraries(simpleUse PUBLIC dynalib-utils)
+add_executable(testKaml ${TOP_SOURCE_DIR}/examples/testKaml.cpp)
+target_link_libraries(testKaml PUBLIC dynalib-utils)
 
 # Enable unit testing
 enable_testing()
 add_subdirectory(src/UnitTests UnitTests)
 
-add_custom_target(TARGET simpleUse POST_BUILD
+add_custom_target(TARGET testKaml POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${TOP_SOURCE_DIR}/examples/sample.kaml ${CMAKE_CURRENT_BINARY_DIR}/sample.kaml)
 
 install(TARGETS dynalib-utils LIBRARY DESTINATION lib)
