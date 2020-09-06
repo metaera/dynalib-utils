@@ -176,6 +176,7 @@ set(PARSER_INCLUDES
     ${UTILS_SOURCE_DIR}/Parser/TokenizerContext.h
     ${UTILS_SOURCE_DIR}/Parser/CharacterClass.h
     ${UTILS_SOURCE_DIR}/Parser/ErrorContext.h
+    ${UTILS_SOURCE_DIR}/Parser/ASCIICharClass.h
 )
 
 set(KAML_INCLUDES
@@ -209,6 +210,10 @@ target_link_libraries(dynalib-utils ${CURL_LIBRARIES})
 # Build the test executable
 add_executable(simpleUse ${TOP_SOURCE_DIR}/examples/simpleUse.cpp)
 target_link_libraries(simpleUse PUBLIC dynalib-utils)
+
+# Enable unit testing
+enable_testing()
+add_subdirectory(src/UnitTests UnitTests)
 
 add_custom_target(TARGET simpleUse POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${TOP_SOURCE_DIR}/examples/sample.kaml ${CMAKE_CURRENT_BINARY_DIR}/sample.kaml)

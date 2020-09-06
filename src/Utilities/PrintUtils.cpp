@@ -4,7 +4,7 @@
 
 #include <cstdio>
 #include <cstdarg>
-#include "Utilities/PrintUtils.h"
+#include "PrintUtils.h"
 
 ofstream PrintUtils::outFile;
 bool PrintUtils::_printToFile = false;

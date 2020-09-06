@@ -9,7 +9,7 @@
 #include <fstream>
 using namespace std;
 
-#include "Utilities/String.h"
+#include "String.h"
 
 class PrintUtils {
     static bool _printToFile;
