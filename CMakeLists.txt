@@ -225,3 +225,10 @@ install(FILES ${PARSER_INCLUDES} DESTINATION include/dynalib/Parser)
 install(FILES ${KAML_INCLUDES} DESTINATION include/dynalib/KAML)
 install(FILES ${DATE_INCLUDES} DESTINATION include/dynalib/date)
 install(FILES ${CRYPTO_INCLUDES} DESTINATION include/dynalib/crypto)
+
+# auto install after build
+add_custom_command(
+    TARGET testKaml
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target install
+)
