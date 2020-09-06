@@ -55,12 +55,12 @@ other:
 
 other:
     #0 #5 #0 "also"                         // ["this", "is", "a", "test", ["with", "addons"], ["also", "features"], { a:5, b:6 }]
-    #0 #5 "test this"                       // ["this", "is", "a", "test", ["with", "addons"], ["also", "features"], { a:5, b:6 }, "test this"]
-    #0 #5 #0 ["First","Last"]               // ["this", "is", "a", "test", ["with", "addons"], [["First","Last"], "features"], { a:5, b:6 }, "test this"]
-    #0 #5 #0 ["John","Smith"]               // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"]], "features"], { a:5, b:6 }, "test this"]
-    #0 #5 #0 ["Tom","Jones"]                // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"], ["Tom","Jones"]], "features"], { a:5, b:6 }, "test this"]
-    #0 #5 #0 ["Boris","Harold"]             // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"], ["Tom","Jones"], ["Boris","Harold"]], "features"], { a:5, b:6 }, "test this"]
-    #0 #5 #0 {f:"Ken", l:"Kopelson"}        // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"], ["Tom","Jones"], ["Boris","Harold"], {f:"Ken", l:"Kopelson"}], "features"], { a:5, b:6 }, "test this"]
-    #0 #6 b:7                               // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"], ["Tom","Jones"], ["Boris","Harold"], {f:"Ken", l:"Kopelson"}], "features"], { a:5, b:7 }, "test this"]
+    #0 #5 "test this"                       // ["this", "is", "a", "test", ["with", "addons"], ["also", "features", "test this"], { a:5, b:6 }]
+    #0 #5 #0 ["First","Last"]               // ["this", "is", "a", "test", ["with", "addons"], [["First","Last"], "features", "test this"], { a:5, b:6 }]
+    #0 #5 #0 ["John","Smith"]               // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"]], "features", "test this"], { a:5, b:6 }]
+    #0 #5 #0 ["Tom","Jones"]                // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"], ["Tom","Jones"]], "features", "test this"], { a:5, b:6 }]
+    #0 #5 #0 ["Boris","Harold"]             // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"], ["Tom","Jones"], ["Boris","Harold"]], "features", "test this"], { a:5, b:6 }]
+    #0 #5 #0 {f:"Ken", l:"Kopelson"}        // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"], ["Tom","Jones"], ["Boris","Harold"], {f:"Ken", l:"Kopelson"}], "features", "test this"], { a:5, b:6 }]
+    #0 #6 b:7                               // ["this", "is", "a", "test", ["with", "addons"], [["First","Last", ["John","Smith"], ["Tom","Jones"], ["Boris","Harold"], {f:"Ken", l:"Kopelson"}], "features", "test this"], { a:5, b:7 }]
     #1 #1 "was"                             // ["this", "was", "another", "test"]
 
