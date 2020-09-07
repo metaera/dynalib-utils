@@ -56,6 +56,8 @@ void t3(Test& test, int& counter) {
     cout << "Thread 3 count: " << counter << endl;
 }
 
+bool executedFinally = false;
+
 void testFinally() {
     char* buf1 = new char[25];
     char* buf2 = new char[50];
@@ -64,12 +66,13 @@ void testFinally() {
         cout << "Delete the two objects" << endl;
         delete[] buf1;
         delete[] buf2;
-        throw Exception();
+        executedFinally = true;
     }
     end_finally
 
     cout << "Do some things here then leave the function" << endl;
     cout << "Throwing an exception now..." << endl;
+    throw Exception();
 }
 
 SCENARIO("Synchronization behaviour is correct") {
@@ -98,6 +101,7 @@ SCENARIO("Finally block behaviour is correct") {
     GIVEN("a function with a finally block defined") {
         WHEN("the function ends, the finally block will trigger") {
             CHECK_THROWS(testFinally());
+            CHECK(executedFinally == true);
         }
     }
 }

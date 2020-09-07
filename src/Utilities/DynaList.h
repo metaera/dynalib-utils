@@ -52,6 +52,7 @@ protected:
     void _deleteExcessCapacity();
     void _deleteRange(int frIndex, int toIndex);
     void _clearRange(int frIndex, int toIndex);
+    void _nullRange(int frIndex, int toIndex);
     void _deleteOrClear(int frIndex, int toIndex);
     bool _setAutoPack(bool isPack);
     bool _setAutoTrim(bool isTrim);

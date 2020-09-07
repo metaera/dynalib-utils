@@ -159,6 +159,14 @@ template <class T> void DynaList<T>::_clearRange(int frIndex, int toIndex) {
         _deleteExcessCapacity();
 }
 
+template <class T> void DynaList<T>::_nullRange(int frIndex, int toIndex) {
+    if (toIndex == END_OF_LIST)
+        toIndex = _count - 1;
+    for (int idx = frIndex; idx <= toIndex; ++idx) {
+        _members[idx] = nullptr;
+    }
+}
+
 template <class T> void DynaList<T>::_deleteOrClear(int frIndex, int toIndex) {
     if (isFlags(AUTO_PACK))
         _deleteRange(frIndex, toIndex);
@@ -421,6 +429,7 @@ template <class T> void DynaList<T>::slide(int frIndex, int toIndex) {
 template <class T> T* DynaList<T>::remove(int index) {
     CheckForError::assertInBounds(index, _count - 1);
     T* item = _members[index];
+    _nullRange(index, index);
     _deleteOrClear(index, index);
     return item;
 }
@@ -429,6 +438,7 @@ template <class T> DynaList<T>* DynaList<T>::remove(int frIndex, int toIndex) {
     CheckForError::assertInBounds(frIndex, toIndex);
     CheckForError::assertInBounds(toIndex, _count - 1);
     DynaList<T>* newArray = _copyRange(frIndex, toIndex);
+    _nullRange(frIndex, toIndex);
     _deleteOrClear(frIndex, toIndex);
     return newArray;
 }
