@@ -9,6 +9,7 @@ logs/
 *.dylib
 *.exe
 *.dll
+*.zip
 cppcheck-report.xml
 valgrind-report.xml
 
