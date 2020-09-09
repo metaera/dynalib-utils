@@ -60,6 +60,7 @@ namespace Graph {
 
     public:
         static bool present(const Node& node, const String& fldName, Node& result);
+        static int  getListLeadingScalarCount(const Node& node);
 
         explicit Node(NodeType type = NodeType::UNTYPED, bool ownsData = true);
         virtual ~Node();

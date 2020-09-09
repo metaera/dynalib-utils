@@ -22,6 +22,22 @@ namespace Graph {
         }
     }
 
+    int Node::getListLeadingScalarCount(const Node& node) {
+        int count = 0;
+        if (node.isList()) {
+            auto& list = node.list();
+            for (auto* child : list) {
+                if (child->isScalar()) {
+                    ++count;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+
     Node::Node(NodeType nodeType, bool ownsData) : _ownsData(true), _key(nullptr) {
         _nodeType   = NodeType::UNTYPED;
         _scalarType = ScalarType::NONE;
