@@ -28,7 +28,8 @@ jobs:
             -c "\
             ./docker/build-coverage.sh /home/devops /github/workspace &&
             pwd &&
-            ls -latr /home/devops"
+            ls -latr /home/devops &&
+            ls -latr /home/devops/coverage"
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
