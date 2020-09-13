@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: gvfn/clang-buildpack:ubuntu-10
+      options: --user 1001
 
     steps:
       # - name: Update permission
