@@ -5,7 +5,7 @@
 
 | Build Status |                                                                                |
 |--------------|--------------------------------------------------------------------------------|
-| Github Actions       | [![Github Actions][travis-build-status-svg]][travis-build-status]         |
+| Github Actions       | ![build-release](https://github.com/metaera/dynalib-utils/workflows/build-release/badge.svg)         |
 
 Example C++11 [CMake](https://cmake.org/)  project that incorporates awesome 
 [Clang](https://clang.llvm.org/) tooling, such as sanitizers, a code formatter, and code coverage

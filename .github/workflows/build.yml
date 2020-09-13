@@ -8,11 +8,13 @@ on:
 jobs:
   release:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    runs-on: gvfn/clang-buildpack:ubuntu-10
+    runs-on: ubuntu-latest
+    contrainer: 
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
       - name: Run Build Coverage
+        uses: docker://gvfn/clang-buildpack:ubuntu-10
         run: ./build-coverage.sh
