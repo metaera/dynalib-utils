@@ -28,6 +28,7 @@ jobs:
       - name: Checkfiles
         run: |
           ls -latr
+          ls -latr build
           ls -latr build/coverage
 
       - name: Push to Coveralls
