@@ -9,9 +9,6 @@ jobs:
   release:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
-    container: 
-      image: gvfn/clang-buildpack:ubuntu-10
-      options: --user 1001
 
     steps:
       # - name: Update permission
@@ -26,13 +23,10 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
-            ./docker/build-coverage.sh /home/devops /github/workspace &&
-            pwd &&
-            ls -latr /home/devops &&
-            ls -latr /home/devops/coverage"
+            ./build-coverage.sh"
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: /home/devops/coverage/lcov.info
+          path-to-lcov: ./build/coverage/lcov.info
