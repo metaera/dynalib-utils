@@ -28,7 +28,8 @@ jobs:
             -c "\
             id -g &&
             id -u &&
-            ls -l &&
+            pwd &&
+            ls -lah &&
             ./build-coverage.sh"
 
       - name: Push to Coveralls
