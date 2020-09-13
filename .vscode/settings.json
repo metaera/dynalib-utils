@@ -3,6 +3,12 @@
     "clang.cxxflags": [
         "-std=c++17"
     ],
+    "testExplorer.showExpandButton": 5,
+    "testExplorer.showOnRun": true,
+    "testExplorer.errorDecoration": false,
+    "testMate.cpp.debug.noThrow": true,
+    "testMate.cpp.test.workingDirectory": "${workspaceFolder}",
+    "testMate.cpp.test.executables": "{build*}/UnitTests/{Test}*",
     "files.associations": {
         "string": "cpp"
     }

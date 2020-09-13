@@ -7,7 +7,7 @@
 #include "KAMLParser.h"
 #include "../TimeUtils.h"
 
-//#define DEBUG
+// #define DEBUG
 
 #define PERIOD_CODE     BASE_USER_CODE + 1
 #define COMMA_CODE      BASE_USER_CODE + 2
@@ -166,7 +166,7 @@ namespace KAML {
         cout << "Enter block at line: " << token.lineNumber << ", indent: " << indentPos << ", level: " << level << endl;
         #endif
         while (!_unwind) {
-            if (token.lineNumber == 51) {
+            if (token.lineNumber == 31) {
                 int i = 0;
             }
             if (token.type == TOK_TYPE_SPECIAL && token.code == EOS_CODE) {
@@ -178,6 +178,7 @@ namespace KAML {
                 #endif
                 break;
             }
+            bool parseNotFound = false;
             if (token.type == TOK_TYPE_OPER) {
                 if (token.code == BREAK_CODE) {
                     _unwind = true;
@@ -302,8 +303,12 @@ namespace KAML {
                         continue;
                     }
                 }
+                else {
+                    parseNotFound = true;
+                }
             }
-            else if (token.type == TOK_TYPE_IDENT || token.type == TOK_TYPE_STRING || token.type == TOK_TYPE_STRING_LIT) {
+            else if (token.type == TOK_TYPE_IDENT || token.type == TOK_TYPE_KEYWORD ||
+                     token.type == TOK_TYPE_STRING || token.type == TOK_TYPE_STRING_LIT) {
                 #ifdef DEBUG
                 cout << "Ident at line pos: " << token.linePosition << endl;
                 #endif
@@ -342,11 +347,18 @@ namespace KAML {
                     _tok->restoreState(state);
                 }
             }
+            else {
+                parseNotFound = true;
+            }
             #ifdef DEBUG
             cout << "  >>> Parsing block value" << endl;
             #endif
             if (!parseBlockValue(token, parentNode, level)) {
                 if (_tok->isError()) {
+                    return false;
+                }
+                if (parseNotFound) {
+                    _tok->error("No valid tokens found...avoiding infinite loop");
                     return false;
                 }
             }

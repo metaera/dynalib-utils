@@ -105,9 +105,9 @@ public:
     DynaList<T>& operator<<(T&& value);
 
     int  firstNullSlot();
-    void setCapacity(uint newCapacity);
-    void setAutoPackTrim(bool pack, bool trim);
-    void setOwnsMembers(bool ownsMembers);
+    DynaList<T>* setCapacity(uint newCapacity);
+    DynaList<T>* setAutoPackTrim(bool pack, bool trim);
+    DynaList<T>* setOwnsMembers(bool ownsMembers);
     void adjustSize(int delta);
     void adjustSizeLog(int delta);
     void trim();

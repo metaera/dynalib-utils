@@ -97,6 +97,10 @@ template <class T> void DynaArray<T>::_deleteRange(int frIndex, int toIndex) {
     _count -= (toIndex - frIndex);
     if (IS_ALL_SET(_flags, AUTO_TRIM))
         _deleteExcessCapacity();
+    // Zero out any remaining slots at the end of the array
+    for (int idx = _count; idx < _capacity; ++idx) {
+        _members[idx] = 0;
+    }
 }
 
 template <class T> void DynaArray<T>::_clearRange(int frIndex, int toIndex) {

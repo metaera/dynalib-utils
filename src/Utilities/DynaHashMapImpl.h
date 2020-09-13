@@ -97,9 +97,12 @@ template <typename K, typename V> MapEntry<K,V>::MapEntry(const MapEntry<K,V>& e
 template <typename K, typename V> MapEntry<K,V>::~MapEntry() {
     if (_key != DynaHashMap<K,V>::nullObject) {
         delete _key;
+        _key = nullptr;
     }
-    if (_ownsValue)
+    if (_ownsValue) {
         delete _value;
+        _value = nullptr;
+    }
 }
 
 template <typename K, typename V> MapEntry<K,V>* MapEntry<K,V>::copy() {
@@ -273,6 +276,7 @@ template <typename K, typename V> V* DynaHashMap<K,V>::put(K* key, V* value) {
     else {
         oldValue = _table[index]->getValue();
         _table[index]->setValue(value);
+        delete key;    // Delete the key that was passed in, since it was not added to the map
     }
     return oldValue;
 }

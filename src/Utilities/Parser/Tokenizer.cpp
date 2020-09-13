@@ -440,12 +440,12 @@ bool Tokenizer::_getNextToken() {
         _getNextChar();
     }
     else {
-        if (!_checkForNumber()) {
-            if (!_checkForIdent()) {
-                if (!_checkForCharLiteral()) {
-                    if (!_checkForQuote()) {
-                        if (!_checkForMultiOp()) {
-                            if (!_checkForOperator()) {
+        if (!_checkForMultiOp()) {
+            if (!_checkForNumber()) {
+                if (!_checkForIdent()) {
+                    if (!_checkForOperator()) {
+                        if (!_checkForCharLiteral()) {
+                            if (!_checkForQuote()) {
                                 if (_context->isGetUnknown()) {
                                     _appendCurrChar();
                                     _getNextChar();
@@ -785,8 +785,8 @@ char Tokenizer::_getEscNumber() {
 
 void Tokenizer::_calcDoubleValue() {
     if ( _currToken->type == TOK_TYPE_FLOAT_LIT ) {
-        _currToken->doubleValue = _currToken->intPortion + ( _currToken->fracPortion / pow( 10, _currToken->fracDigits ) );
-        _currToken->doubleValue = _currToken->doubleValue * pow( 10, _currToken->expPortion );
+        _currToken->doubleValue = _currToken->intPortion + ( _currToken->fracPortion / powl( 10, _currToken->fracDigits ) );
+        _currToken->doubleValue = _currToken->doubleValue * powl( 10, _currToken->expPortion );
     }
 }
 

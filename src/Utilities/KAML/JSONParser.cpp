@@ -222,7 +222,7 @@ namespace KAML {
                     }
                     else if (typeStr == FLOAT_TYPE) {
                         String valStr = objNode[VALUE_TAG].asString().tolower();
-                        double fval   = 0.0;
+                        long double fval = 0.0;
                         if (valStr == "inf") {
                             fval = INFINITY;
                         }
