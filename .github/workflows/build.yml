@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Update permission
         run: |
-          sudo chown -R $USER:$USER /home/runner/work/_temp/{REPOSITORY_NAME_HERE}
+          sudo chown -R $USER:$USER /home/runner/work/_temp
       - name: Check out Git repository
         uses: actions/checkout@v2
 
