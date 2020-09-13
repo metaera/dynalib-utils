@@ -9,9 +9,9 @@ jobs:
   release:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
-    container: 
-      image: gvfn/clang-buildpack:ubuntu-10
-      options: --privileged
+    # container: 
+    #   image: gvfn/clang-buildpack:ubuntu-10
+    #   options: --privileged
 
     steps:
       - name: Check out Git repository
