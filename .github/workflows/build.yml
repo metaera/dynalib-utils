@@ -27,6 +27,7 @@ jobs:
 
       - name: Checkfiles
         run: |
+          sudo chown -R $USER:$USER ./build
           ls -latr
           ls -latr build
           ls -latr build/coverage
