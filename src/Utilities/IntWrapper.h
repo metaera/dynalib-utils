@@ -138,6 +138,7 @@ typedef IntWrapper<long long>          LongLong;
 typedef IntWrapper<unsigned long long> ULongLong;
 typedef IntWrapper<float>              Float;
 typedef IntWrapper<double>             Double;
+typedef IntWrapper<long double>        LongDouble;
 
 #ifdef USE_LONG
 typedef IntWrapper<int64_t> Index;

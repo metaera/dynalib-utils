@@ -325,11 +325,11 @@ namespace Graph {
     }
 
     Node& Node::operator=(float value) {
-        setScalar((double)value);
+        setScalar((long double)value);
         return *this;
     }
 
-    Node& Node::operator=(double value) {
+    Node& Node::operator=(long double value) {
         setScalar(value);
         return *this;
     }
@@ -386,11 +386,11 @@ namespace Graph {
     }
 
     Node& Node::operator+=(float value) {
-        addScalar((double)value);
+        addScalar((long double)value);
         return *this;
     }
 
-    Node& Node::operator+=(double value) {
+    Node& Node::operator+=(long double value) {
         addScalar(value);
         return *this;
     }
@@ -618,7 +618,7 @@ namespace Graph {
         return result;
     }
  
-    const double Node::asFloat() const {
+    const long double Node::asFloat() const {
         double result = 0.0;
         if (_nodeType == NodeType::SCALAR) {
             switch (_scalarType) {
@@ -818,7 +818,7 @@ namespace Graph {
         _value.intValue = value;
     }
 
-    void Node::setScalar(double value) {
+    void Node::setScalar(long double value) {
         _reset();
         _nodeType   = NodeType::SCALAR;
         _scalarType = ScalarType::FLOAT;
@@ -874,7 +874,7 @@ namespace Graph {
         return addNode(node);
     }
 
-    Node* Node::addScalar(double value) {
+    Node* Node::addScalar(long double value) {
         auto* node = newUntypedNode();
         node->setScalar(value);
         return addNode(node);
@@ -916,7 +916,7 @@ namespace Graph {
         return addNode(key, node);
     }
 
-    Node* Node::addScalar(const String& key, double value) {
+    Node* Node::addScalar(const String& key, long double value) {
         auto* node = newUntypedNode();
         node->setScalar(value);
         return addNode(key, node);

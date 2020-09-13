@@ -35,13 +35,13 @@ namespace Graph {
     enum class ScalarType { NONE, BOOL, INT, FLOAT, STRING, SEQ, PROPER, TIME, TIMESTAMP, DATE };
 
     union NodeValue {
-        bool      boolValue;
-        long long intValue;
-        double    floatValue;
-        String*   strValue = nullptr;
+        bool        boolValue;
+        long long   intValue;
+        long double floatValue;
+        String*     strValue = nullptr;
         system_clock::time_point* timeValue;
-        NodeList* listValue;
-        NodeMap*  mapValue;
+        NodeList*   listValue;
+        NodeMap*    mapValue;
     };
 
     class Node : public IHashable<Node>, public ICopyable<Node> {
@@ -98,7 +98,7 @@ namespace Graph {
         Node&       operator=(int value);
         Node&       operator=(long long value);
         Node&       operator=(float value);
-        Node&       operator=(double value);
+        Node&       operator=(long double value);
         Node&       operator=(system_clock::time_point value);
         Node&       operator=(Time value);
         Node&       operator=(Timestamp value);
@@ -111,7 +111,7 @@ namespace Graph {
         Node&       operator+=(int value);
         Node&       operator+=(long long value);
         Node&       operator+=(float value);
-        Node&       operator+=(double value);
+        Node&       operator+=(long double value);
         Node&       operator+=(system_clock::time_point value);
         Node&       operator+=(Time value);
         Node&       operator+=(Timestamp value);
@@ -132,11 +132,11 @@ namespace Graph {
         const bool  isTimestamp() const;
         const bool  isDate() const;
 
-        const String    asString() const;
-        const bool      asBool() const;
-        const long long asInt() const;
-        const double    asFloat() const;
-        const String    asNullPtr() const;
+        const String      asString() const;
+        const bool        asBool() const;
+        const long long   asInt() const;
+        const long double asFloat() const;
+        const String      asNullPtr() const;
         const system_clock::time_point asTime() const;
         const system_clock::time_point asTimestamp() const;
         const system_clock::time_point asDate() const;
@@ -147,7 +147,7 @@ namespace Graph {
         void  setScalar(const char* value, ScalarType strType = ScalarType::STRING);
         void  setScalar(bool value);
         void  setScalar(long long value);
-        void  setScalar(double value);
+        void  setScalar(long double value);
         void  setScalar(system_clock::time_point& value, ScalarType timeType);
         void  setList();
         void  setMap();
@@ -161,7 +161,7 @@ namespace Graph {
         Node* addScalar(const char* value, ScalarType strType = ScalarType::STRING);
         Node* addScalar(bool value);
         Node* addScalar(long long value);
-        Node* addScalar(double value);
+        Node* addScalar(long double value);
         Node* addScalar(system_clock::time_point& value, ScalarType timeType);
         Node* addList();
         Node* addMap();
@@ -170,7 +170,7 @@ namespace Graph {
         Node* addScalar(const String& key, const char* value, ScalarType strType = ScalarType::STRING);
         Node* addScalar(const String& key, bool value);
         Node* addScalar(const String& key, long long value);
-        Node* addScalar(const String& key, double value);
+        Node* addScalar(const String& key, long double value);
         Node* addScalar(const String& key, system_clock::time_point& value, ScalarType timeType);
         Node* addList(const String& key);
         Node* addMap(const String& key);

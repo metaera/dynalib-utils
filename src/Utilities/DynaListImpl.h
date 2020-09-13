@@ -134,7 +134,9 @@ template <class T> void DynaList<T>::_deleteRange(int frIndex, int toIndex) {
         }
     }
     // Then slide everything down over the items in the range
-    memmove(_members + frIndex, _members + toIndex, (_count - toIndex) * sizeof(T*));
+    if (_count > toIndex) {
+        memmove(_members + frIndex, _members + toIndex, (_count - toIndex) * sizeof(T*));
+    }
     _count -= (toIndex - frIndex);
     if (isFlags(AUTO_TRIM))
         _deleteExcessCapacity();
@@ -194,16 +196,18 @@ template <class T> bool DynaList<T>::_setAutoTrim(bool isTrim) {
     return isTrim;
 }
 
-template <class T> void DynaList<T>::setAutoPackTrim(bool pack, bool trim) {
+template <class T> DynaList<T>* DynaList<T>::setAutoPackTrim(bool pack, bool trim) {
     if (!_setAutoPack(pack))
         _setAutoTrim(trim);
+    return this;
 }
 
-template <class T> void DynaList<T>::setOwnsMembers(bool ownsMembers) {
+template <class T> DynaList<T>* DynaList<T>::setOwnsMembers(bool ownsMembers) {
     if (ownsMembers)
         setFlags(OWNS_MEMBERS);
     else
         clearFlags(OWNS_MEMBERS);
+    return this;
 }
 
 template <class T> int DynaList<T>::_nextFreeSlot() {
@@ -255,13 +259,14 @@ template <class T> int DynaList<T>::firstNullSlot() {
     return INVALID_INDEX;
 }
 
-template <class T> void DynaList<T>::setCapacity(uint newCapacity) {
+template <class T> DynaList<T>* DynaList<T>::setCapacity(uint newCapacity) {
     if (newCapacity != _capacity) {
         _members  = DynaAllocVect<T>::reallocVect(_members, (uint)_capacity, newCapacity, isFlags(OWNS_MEMBERS));
         _capacity = newCapacity;
         if (_count > _capacity)
             _count = _capacity;
     }
+    return this;
 }
 
 template <class T> void DynaList<T>::adjustSize(int delta) {

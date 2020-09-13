@@ -36,26 +36,26 @@ class Token {
     String  _buffer;
 
 public:
-    int       type           = TYPE_INVALID;
-    int       code           = INVALID_CODE;
-    long      specialBits    = 0L;
-    double    doubleValue    = 0.0;
-    bool      boolValue      = false;
-    time_t    timeValue      = 0;
-    int       lineNumber     = 0;
-    int       linePosition   = 0;
-    int       tokenPosition  = 0;
-    int       intRadix       = 10;
-    int       fracDigits     = 0;
-    long long intPortion     = 0;
-    int       fracPortion    = 0;
-    int       expPortion     = 0;
-    bool      negFound       = false;
-    bool      intFound       = false;
-    bool      fracFound      = false;
-    bool      infNanFound    = false;
-    bool      expFound       = false;
-    bool      expSign        = false;
+    int         type           = TYPE_INVALID;
+    int         code           = INVALID_CODE;
+    long        specialBits    = 0L;
+    long double doubleValue    = 0.0;
+    bool        boolValue      = false;
+    time_t      timeValue      = 0;
+    int         lineNumber     = 0;
+    int         linePosition   = 0;
+    int         tokenPosition  = 0;
+    int         intRadix       = 10;
+    int         fracDigits     = 0;
+    long long   intPortion     = 0;
+    long        fracPortion    = 0;
+    long        expPortion     = 0;
+    bool        negFound       = false;
+    bool        intFound       = false;
+    bool        fracFound      = false;
+    bool        infNanFound    = false;
+    bool        expFound       = false;
+    bool        expSign        = false;
 
     Token() = default;
     Token(const Token& token);
