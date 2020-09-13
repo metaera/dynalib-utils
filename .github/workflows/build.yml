@@ -23,7 +23,9 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
-            ./build-coverage.sh"
+            ./build-coverage.sh &&
+            ls -latr &&
+            ls -latr converage"
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
