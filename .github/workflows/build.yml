@@ -26,10 +26,11 @@ jobs:
         run: |
           sudo chown -R $USER:$USER ./build
           cat ./build/coverage/lcov.info
+          sed -i -E "s/^SF:(.+)$/SF:github\/workspace\/\1/" ./build/coverage/lcov.info
+          cat ./build/coverage/lcov.info
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./build/coverage/lcov.info
-          base-path: /github/workspace
