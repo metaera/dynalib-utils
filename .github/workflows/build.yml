@@ -1,0 +1,18 @@
+name: build-release
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  release:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: gvfn/clang-buildpack:ubuntu-10
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Run Build Coverage
+        run: ./build-coverage.sh

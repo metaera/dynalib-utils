@@ -5,7 +5,7 @@
 
 | Build Status |                                                                                |
 |--------------|--------------------------------------------------------------------------------|
-| Travis       | [![Travis Build Status][travis-build-status-svg]][travis-build-status]         |
+| Github Actions       | [![Github Actions][travis-build-status-svg]][travis-build-status]         |
 
 Example C++11 [CMake](https://cmake.org/)  project that incorporates awesome 
 [Clang](https://clang.llvm.org/) tooling, such as sanitizers, a code formatter, and code coverage
