@@ -25,7 +25,7 @@ jobs:
             -c "\
             ./build-coverage.sh &&
             ls -latr &&
-            ls -latr converage"
+            ls -latr build/coverage"
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
