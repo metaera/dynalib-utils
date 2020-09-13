@@ -135,7 +135,7 @@ Unit tests are written using the [Catch2](https://github.com/catchorg/Catch2/) u
 framework.
 
 ```bash
-$ ./UnitTests/TestUtils
+$ ./UnitTests
 ```
 
 ## Build Docs
@@ -226,7 +226,7 @@ wider variety of bugs.
 $ cd build
 $ cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=clang++ -DADDRESS_SANITIZER=On ..
 $ make
-$ ./UnitTests/TestUtils
+$ ./UnitTests
 ==25797==ERROR: AddressSanitizer: heap-use-after-free on address 0x61400000024c at 
 pc 0x000000616ecf bp 0x7ffd7aab4b30 sp 0x7ffd7aab4b28
 ...
@@ -246,7 +246,7 @@ program execution, for example:
 $ cd build
 $ cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=clang++ -DUNDEFINED_SANITIZER=On ..
 $ make
-$ ./UnitTests/TestUtils
+$ ./UnitTests
 /home/user/GitHub/clang-blueprint/test/danger/test_bad_examples.cpp:17:7: 
 runtime error: signed integer overflow: 2147483647 + 1 cannot be represented in type 'int'
 ...
@@ -261,12 +261,12 @@ provides metrics on which lines are covered by tests.
 $ cd build
 $ cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=clang++ -DCLANG_CODE_COVERAGE=On ..
 $ make
-$ ./UnitTests/TestUtils
+$ ./UnitTests
 
 # On Ubuntu 18.04, use the specific llvm-profdata-6.0 command.
 $ llvm-profdata merge -sparse default.profraw -o default.profdata
 # On Ubuntu 18.04, use the specific llvm-cov-6.0 command.
-$ llvm-cov show -format=html -o coverage ./UnitTests/TestUtils -instr-profile=default.profdata
+$ llvm-cov show -format=html -o coverage ./UnitTests -instr-profile=default.profdata
 
 # View the coverage report.
 $ firefox coverage/index.html
