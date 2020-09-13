@@ -9,7 +9,10 @@ jobs:
   release:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
-    # contrainer: gvfn/clang-buildpack:ubuntu-10
+    contrainer: 
+      image: gvfn/clang-buildpack:ubuntu-10
+      volumes:
+        - /home/runner/work/_temp/_github_home:/build:rw
 
     steps:
       - name: Check out Git repository
@@ -21,6 +24,8 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
+            ls -l
+            cd /build
             ./build-coverage.sh"
 
       - name: Push to Coveralls
