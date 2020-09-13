@@ -21,7 +21,6 @@ jobs:
           args: |
             -c "\
             ls -l
-            cd /dynalib-utils/dynalib-utils
             ./build-coverage.sh"
 
       - name: Push to Coveralls
