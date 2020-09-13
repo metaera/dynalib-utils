@@ -26,10 +26,6 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
-            id -g &&
-            id -u &&
-            pwd &&
-            ls -lah &&
             ./build-coverage.sh"
 
       - name: Push to Coveralls
