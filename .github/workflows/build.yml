@@ -9,14 +9,24 @@ jobs:
   release:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
-    # contrainer: gvfn/clang-buildpack:ubuntu-10
+    # container: 
+    #   image: gvfn/clang-buildpack:ubuntu-10
+    #   options: --privileged
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - name: Run Build Container
+      - name: Run Build in a container
         uses: docker://gvfn/clang-buildpack:ubuntu-10
+        with:
+          entrypoint: /bin/bash
+          args: |
+            -c "\
+            ./build-coverage.sh"
 
-      - name: Run Build Coverage
-        run: ./build-coverage.sh
+      - name: Push to Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: build/coverage/lcov.info
