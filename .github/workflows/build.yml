@@ -20,17 +20,11 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
-            ./build-coverage.sh &&
-            ls -latr &&
-            ls -latr build &&
-            ls -latr build/coverage"
+            ./build-coverage.sh"
 
-      - name: Checkfiles
+      - name: Fix permissions
         run: |
           sudo chown -R $USER:$USER ./build
-          ls -latr
-          ls -latr build
-          ls -latr build/coverage
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
