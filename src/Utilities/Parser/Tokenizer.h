@@ -11,7 +11,7 @@
 
 class  Token;
 class  TokenizerContext;
-class  TokenizerState;
+struct TokenizerState;
 struct ErrorContext;
 
 class Tokenizer {

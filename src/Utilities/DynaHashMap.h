@@ -47,18 +47,18 @@ public:
  * Template for Marker Object to mark "nullptr" entries and deleted entries
  * @tparam K
  */
-template <typename K> class MapObject : IHashable<K> {
-public:
-    MapObject<K>() = default;
-    virtual ~MapObject() = default;
+// template <typename K> class MapObject : IHashable<K> {
+// public:
+//     MapObject<K>() = default;
+//     virtual ~MapObject() = default;
 
-    int hashCode() const override {
-        return 0;
-    }
-    bool operator== (const K& other) const override {
-        return *this == other;
-    }
-};
+//     int hashCode() const override {
+//         return 0;
+//     }
+//     bool operator== (const K& other) const override {
+//         return *this == other;
+//     }
+// };
 
 template <typename K, typename V> class DynaMapIter;
 template <typename K, typename V> class MapKeyIter;
@@ -97,7 +97,8 @@ protected:
     int  _getTableIndex(K* key);
 
 public:
-    static MapObject<K> nullObjectInstance;
+    // static MapObject<K> nullObjectInstance;
+    static K            nullObjectInstance;
     static K*           nullObject;
 
     explicit DynaHashMap();

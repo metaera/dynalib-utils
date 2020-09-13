@@ -44,18 +44,18 @@ public:
  * Template for Marker Object to mark "nullptr" entries and deleted entries
  * @tparam E
  */
-template <typename V> class SetObject : IHashable<V> {
-public:
-    SetObject<V>() = default;
-    virtual ~SetObject() = default;
+// template <typename V> class SetObject : IHashable<V> {
+// public:
+//     SetObject<V>() = default;
+//     virtual ~SetObject() = default;
 
-    int hashCode() const override {
-        return 0;
-    }
-    bool operator== (const V& other) const override {
-        return *this == other;
-    }
-};
+//     int hashCode() const override {
+//         return 0;
+//     }
+//     bool operator== (const V& other) const override {
+//         return *this == other;
+//     }
+// };
 
 template <typename V> class DynaSetIter;
 template <typename V> class SetIter;
@@ -86,8 +86,8 @@ protected:
     int  _getTableIndex(V* value);
 
 public:
-    static SetObject<V> nullObjectInstance;
-    static V*           nullObject;
+    static V       nullObjectInstance;
+    static V*      nullObject;
 
     explicit DynaHashSet();
     explicit DynaHashSet(int size);

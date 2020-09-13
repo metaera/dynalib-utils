@@ -480,7 +480,7 @@ template <class T> LinkedIter<T>::LinkedIter(DynaLinkedList<T>* list)
         : _list(list), _current(list->getFirst()) {}
 
 template <class T> LinkedIter<T>::LinkedIter(DynaLinkedList<T>* list, LinkedEntry<T>* start)
-        : _list(list), _current(start) {}
+        : _current(start), _list(list) {}
 
 template <class T> bool LinkedIter<T>::hasNext()     {
     return _current == nullptr ? _list->getFirst() != nullptr  : _current->getNext() != nullptr;
@@ -548,7 +548,7 @@ template <class T> LinkedEntryIter<T>::LinkedEntryIter(DynaLinkedList<T>* list)
         : _list(list), _current(list->getFirst()) {}
 
 template <class T> LinkedEntryIter<T>::LinkedEntryIter(DynaLinkedList<T>* list, LinkedEntry<T>* start)
-        : _list(list), _current(start) {}
+        : _current(start),_list(list) {}
 
 template <class T> bool LinkedEntryIter<T>::hasNext() {
     return _current == nullptr ? _list->getFirst() != nullptr  :

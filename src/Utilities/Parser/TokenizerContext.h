@@ -50,6 +50,8 @@ public:
     bool isGetSpaces();
     void setAllowNumCommas(bool allowNumCommas);
     bool isAllowNumCommas();
+    void setAllowInnerApostrophe(bool innerApostrophe);
+    bool isAllowInnerApostrophe();
     void setCharClass(CharacterClass* charClass);
     CharacterClass* getCharClass();
 

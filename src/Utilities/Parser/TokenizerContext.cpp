@@ -88,6 +88,15 @@ bool TokenizerContext::isAllowNumCommas() {
     return _allowNumCommas;
 }
 
+void TokenizerContext::setAllowInnerApostrophe(bool innerApostrophe) {
+    _innerApostrophe = innerApostrophe;
+}
+
+
+bool TokenizerContext::isAllowInnerApostrophe() {
+    return _innerApostrophe;    
+}
+
 void TokenizerContext::setCharClass(CharacterClass* charClass) {
     _charClass = charClass;
 }

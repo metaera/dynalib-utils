@@ -110,12 +110,12 @@ template <typename V> SetEntry<V>* SetEntry<V>::copy() {
  * @tparam V
  */
 template <typename V> DynaHashSet<V>::DynaHashSet() :
-        _count(0), _modCount(0), _capacity(INITIAL_SIZE), _freeCells(INITIAL_SIZE), _ownsMembers(true) {
+        _count(0), _capacity(INITIAL_SIZE), _freeCells(INITIAL_SIZE), _modCount(0), _ownsMembers(true) {
     _init(INITIAL_SIZE);
 }
 
 template <typename V> DynaHashSet<V>::DynaHashSet(int size) :
-        _count(0), _modCount(0), _capacity(size), _freeCells(size), _ownsMembers(true) {
+        _count(0), _capacity(size), _freeCells(size), _modCount(0), _ownsMembers(true) {
     _init(size);
 }
 
@@ -260,7 +260,7 @@ template <typename V> bool DynaHashSet<V>::add(V* value) {
 }
 
 template <typename V> bool DynaHashSet<V>::add(V value) {
-    return add(&value);
+    return add(new V(value));
 }
 
 template <typename V> V* DynaHashSet<V>::remove(V* value) {
@@ -360,8 +360,8 @@ template <typename V> const SetIter<V>& SetIter<V>::operator-- () {
 //===========================================================================
 //                          Static Initialization
 //===========================================================================
-template <typename V> SetObject<V>  DynaHashSet<V>::nullObjectInstance = SetObject<V>();
-template <typename V> V* DynaHashSet<V>::nullObject                    = (V*)(void*)(&DynaHashSet<V>::nullObjectInstance);
+template <typename V> V  DynaHashSet<V>::nullObjectInstance;
+template <typename V> V* DynaHashSet<V>::nullObject                     = &nullObjectInstance;
 
 template <typename V> SetEntry<V> DynaHashSet<V>::deletedObjectInstance = SetEntry<V>(DynaHashSet<V>::nullObject, false);
 template <typename V> SetEntry<V>* DynaHashSet<V>::deletedObject        = &deletedObjectInstance;

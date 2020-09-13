@@ -185,11 +185,12 @@ protected:
 //    ste::concurrent_queue<String*>* _queue;
 
 public:
+    DynaOutputSink();
     DynaOutputSink(SinkType type);
     virtual ~DynaOutputSink();
 
     DynaOutputSink(const DynaOutputSink& other);
-    DynaOutputSink* copy() override = 0;
+    DynaOutputSink* copy() override;
 
     //-----------------------------------------------------------------
     //                   IHashable Implementation
@@ -240,8 +241,8 @@ public:
     String   ansiOn(LogLevel level);
     bool     isLevelOverride();
 
-    virtual bool appendToQueue(LogLevel level, const char* outStr) = 0;
-    virtual void flush() = 0;
+    virtual bool appendToQueue(LogLevel level, const char* outStr);
+    virtual void flush();
 };
 
 class DynaOutputSinkConsole : public DynaOutputSink {

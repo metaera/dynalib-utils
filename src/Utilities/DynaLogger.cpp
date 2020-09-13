@@ -367,8 +367,10 @@ void DynaLoggerManager::updateAllLogLevels(bool resetOverride) {
 }
 
 //======================================================================================================
+DynaOutputSink::DynaOutputSink() {    
+}
 DynaOutputSink::DynaOutputSink(SinkType type) :
-     _type(type), _enabled(true), _minLogLevel(NONE), _maxLogLevel(ALL), _levelOverride(false), _colors(NO_COLOR) {
+     _type(type), _minLogLevel(NONE), _maxLogLevel(ALL), _levelOverride(false), _colors(NO_COLOR), _enabled(true) {
 }
 DynaOutputSink::~DynaOutputSink() {
 //    delete _queue;
@@ -376,6 +378,10 @@ DynaOutputSink::~DynaOutputSink() {
 
 DynaOutputSink::DynaOutputSink(const DynaOutputSink& other) {
     _type = other._type;
+}
+
+DynaOutputSink* DynaOutputSink::copy() {
+    throw MethodNotImplemented("Base-class version not callable");
 }
 
 int DynaOutputSink::hashCode() const {
@@ -446,6 +452,14 @@ void DynaOutputSink::setLogLevels(LogLevel minLevel, LogLevel maxLevel, bool ove
 
 bool DynaOutputSink::isLevelOverride() {
     return _levelOverride;
+}
+
+bool DynaOutputSink::appendToQueue(LogLevel level, const char* outStr) {
+    throw MethodNotImplemented("Base-class version not callable");
+}
+
+void DynaOutputSink::flush() {
+    throw MethodNotImplemented("Base-class version not callable");
 }
 
 #define ANSI_OFF "\033[0m"

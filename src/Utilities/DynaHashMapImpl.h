@@ -116,12 +116,12 @@ template <typename K, typename V> MapEntry<K,V>* MapEntry<K,V>::copy() {
  * @tparam V
  */
 template <typename K, typename V> DynaHashMap<K,V>::DynaHashMap() :
-        _count(0), _modCount(0), _capacity(INITIAL_SIZE), _freeCells(INITIAL_SIZE), _ownsMembers(true) {
+        _count(0), _capacity(INITIAL_SIZE), _freeCells(INITIAL_SIZE), _modCount(0), _ownsMembers(true) {
     _init(INITIAL_SIZE);
 }
 
 template <typename K, typename V> DynaHashMap<K,V>::DynaHashMap(int size) :
-        _count(0), _modCount(0), _capacity(size), _freeCells(size), _ownsMembers(true) {
+        _count(0), _capacity(size), _freeCells(size), _modCount(0), _ownsMembers(true) {
     _init(size);
 }
 
@@ -399,8 +399,12 @@ template <typename K, typename V> const MapValueIter<K,V>& MapValueIter<K,V>::op
 //===========================================================================
 //                          Static Initialization
 //===========================================================================
-template <typename K, typename V> MapObject<K>  DynaHashMap<K,V>::nullObjectInstance = MapObject<K>();
-template <typename K, typename V> K* DynaHashMap<K,V>::nullObject                    = (K*)(void*)(&DynaHashMap<K,V>::nullObjectInstance);
+// template <typename K, typename V> MapObject<K>  DynaHashMap<K,V>::nullObjectInstance = MapObject<K>();
+// template <typename K, typename V> K* DynaHashMap<K,V>::nullObject                    = (K*)(void*)(&DynaHashMap<K,V>::nullObjectInstance);
+
+template <typename K, typename V> K  DynaHashMap<K,V>::nullObjectInstance;
+template <typename K, typename V> K* DynaHashMap<K,V>::nullObject         = &nullObjectInstance;
+
 
 template <typename K, typename V> MapEntry<K,V> DynaHashMap<K,V>::deletedObjectInstance = MapEntry<K,V>(DynaHashMap<K,V>::nullObject, nullptr, false);
 template <typename K, typename V> MapEntry<K,V>* DynaHashMap<K,V>::deletedObject        = &deletedObjectInstance;
