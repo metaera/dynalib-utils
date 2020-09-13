@@ -26,7 +26,9 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
-            ./docker/build-coverage.sh /home/devops /github/workspace"
+            ./docker/build-coverage.sh /home/devops /github/workspace &&
+            pwd &&
+            ls -latr /home/devops"
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
