@@ -25,9 +25,11 @@ jobs:
       - name: Fix permissions
         run: |
           sudo chown -R $USER:$USER ./build
+          cat ./build/coverage/lcov.info
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./build/coverage/lcov.info
+          base-path: /github/workspace
