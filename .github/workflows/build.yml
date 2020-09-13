@@ -26,6 +26,8 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
+            id -d &&
+            id -u &&
             ls -l &&
             ./build-coverage.sh"
 
