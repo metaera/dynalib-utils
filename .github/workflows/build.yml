@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Update permission
-      #   run: |
-      #     sudo chown -R $USER:$USER /home/runner/work/_temp
       - name: Check out Git repository
         uses: actions/checkout@v2
 
@@ -26,6 +23,11 @@ jobs:
             ./build-coverage.sh &&
             ls -latr &&
             ls -latr build/coverage"
+
+      - name: Checkfiles
+        run: |
+          ls -latr
+          ls -latr build/coverage
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
