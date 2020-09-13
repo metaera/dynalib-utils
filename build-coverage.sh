@@ -1,6 +1,7 @@
 if [[ ! -d "build" ]]; then
     mkdir build
 fi
+cd build
 cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=clang++ -DCLANG_CODE_COVERAGE=On ..
 make
 ./UnitTests
