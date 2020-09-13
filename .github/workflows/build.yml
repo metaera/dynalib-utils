@@ -26,7 +26,7 @@ jobs:
         run: |
           sudo chown -R $USER:$USER ./build
           cat ./build/coverage/lcov.info
-          sed -i -E "s/^SF:(.+)$/SF:github\/workspace\/\1/" ./build/coverage/lcov.info
+          sed -i -E  "s/\/github\/workspace\///g" build/coverage/lcov.info
           cat ./build/coverage/lcov.info
 
       - name: Push to Coveralls
