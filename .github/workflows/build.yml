@@ -14,6 +14,9 @@ jobs:
     #   options: --privileged
 
     steps:
+      - name: Update permission
+        run: |
+          sudo chown -R $USER:$USER /home/github/actions-runner/_work/{REPOSITORY_NAME_HERE}
       - name: Check out Git repository
         uses: actions/checkout@v2
 
