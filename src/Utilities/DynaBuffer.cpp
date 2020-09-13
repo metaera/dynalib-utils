@@ -290,6 +290,15 @@ double DynaBuffer::getNextDouble() {
     return value;
 }
 
+long double DynaBuffer::getNextLongDouble() {
+    long double value = 0.0L;
+    if (requiresRemaining(sizeof(long double))) {
+        value = *(long double*)(_buffer + _bufPos);
+        _bufPos += sizeof(long double);
+    }
+    return value;
+}
+
 bool DynaBuffer::getNextString(char* buf, uint count, bool addTerm) {
     if (requiresRemaining(count)) {
         for (int i = 0; i < count; ++i) {
@@ -478,6 +487,20 @@ bool DynaBuffer::putDouble(double value) {
     if (hasRemainingCapacity(sizeof(double))) {
         *(double*)(_buffer + _bufPos) = value;
         _bufPos += sizeof(double);
+        _isDirty = true;
+        if (_bufPos > _bufEnd)
+            _bufEnd = _bufPos;
+        return true;
+    }
+    else if (THROW_EXCEPTIONS)
+        throw BufferOverrunException();
+    return false;
+}
+
+bool DynaBuffer::putLongDouble(long double value) {
+    if (hasRemainingCapacity(sizeof(long double))) {
+        *(long double*)(_buffer + _bufPos) = value;
+        _bufPos += sizeof(long double);
         _isDirty = true;
         if (_bufPos > _bufEnd)
             _bufEnd = _bufPos;

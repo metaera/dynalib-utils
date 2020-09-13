@@ -16,8 +16,8 @@ template <class T> class DynaAllocArray {
 public:
     static T*   newArray(uint count);
     static T*   reallocArray(T* array, uint oldCount, uint newCount);
-    static void deleteArray(T* array);
-    static void clearArray(T* array, uint count);
+    static T*   deleteArray(T* array);
+    static T*   clearArray(T* array, uint count);
 
     static void setAllocUnits(uint allocUnits) { ALLOC_UNITS = allocUnits; }
     static uint getAllocUnits() { return ALLOC_UNITS; }
@@ -28,7 +28,7 @@ template <class T> class DynaAllocVect {
 public:
     static T**  newVect(uint count);
     static T**  reallocVect(T** array, uint oldCount, uint newCount, bool isOwner);
-    static void deleteVect(T** array, uint arrayCount, bool isOwner);
+    static T**  deleteVect(T** array, uint arrayCount, bool isOwner);
 
     static void setAllocUnits(uint allocUnits) { ALLOC_UNITS = allocUnits; }
     static uint getAllocUnits() { return ALLOC_UNITS; }

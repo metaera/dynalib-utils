@@ -24,12 +24,11 @@ template <class T> T* DynaAllocArray<T>::reallocArray(T* array, uint oldCount, u
                 memset((void*)array, 0, newCount * sizeof(T));
             }
             else if (newCount == 0) {
-                delete[] array;
-                array = nullptr;
+                array = deleteArray(array);
             }
             else {
-                T* newArray     = new T[newCount];
-                uint  copyCount = newCount > oldCount ? oldCount : newCount;
+                T*   newArray  = new T[newCount];
+                uint copyCount = newCount > oldCount ? oldCount : newCount;
                 memcpy(newArray, array, copyCount * sizeof(T));
 
                 delete[] array;
@@ -44,12 +43,15 @@ template <class T> T* DynaAllocArray<T>::reallocArray(T* array, uint oldCount, u
     return array;
 }
 
-template <class T> void DynaAllocArray<T>::deleteArray(T* array) {
-    delete array;
+template <class T> T* DynaAllocArray<T>::deleteArray(T* array) {
+    delete[] array;
+    array = nullptr;
+    return array;
 }
 
-template <class T> void DynaAllocArray<T>::clearArray(T* array, uint count) {
+template <class T> T* DynaAllocArray<T>::clearArray(T* array, uint count) {
     memset((void*)array, 0, count * sizeof(T));
+    return array;
 }
 
 template <class T> T** DynaAllocVect<T>::newVect(uint count) {
@@ -64,11 +66,11 @@ template <class T> T** DynaAllocVect<T>::reallocVect(T** array, uint oldCount, u
                 memset(array, 0, newCount * sizeof(T*));
             }
             else if (newCount == 0) {
-                deleteVect(array, oldCount, isOwner);
+                array = deleteVect(array, oldCount, isOwner);
             }
             else {
-                T**   newArray  = new T*[newCount];
-                uint  copyCount = newCount > oldCount ? oldCount : newCount;
+                T**  newArray  = new T*[newCount];
+                uint copyCount = newCount > oldCount ? oldCount : newCount;
                 memcpy(newArray, array, copyCount * sizeof(T*));
                 if (isOwner && (newCount < oldCount)) {
                     /**
@@ -78,13 +80,18 @@ template <class T> T** DynaAllocVect<T>::reallocVect(T** array, uint oldCount, u
                         delete array[idx];
                     }
                 }
+                /**
+                 * Zero out all the pointers from the old array so that deleting it will
+                 * not invoke any destructors, since we have already invoked them just above
+                 * if we are the owners of the members.
+                 */
                 memset(array, 0, oldCount * sizeof(T*));
                 /**
                  * Important! Use a regular "delete" here, not "delete[]".  We don't want the members
                  * to get deleted, since we have just copied their pointers to the new array.  We just want the array
                  * itself to be deleted.
                  */
-                delete array;
+                delete[] array;
                 array = newArray;
                 if (newCount > oldCount)
                     memset((array + oldCount), 0, (newCount - oldCount) * sizeof(T*));
@@ -96,16 +103,16 @@ template <class T> T** DynaAllocVect<T>::reallocVect(T** array, uint oldCount, u
     return array;
 }
 
-template <class T> void DynaAllocVect<T>::deleteVect(T** array, uint arrayCount, bool isOwner) {
+template <class T> T** DynaAllocVect<T>::deleteVect(T** array, uint arrayCount, bool isOwner) {
     if (isOwner) {
         for (uint idx = 0; idx < arrayCount; ++idx) {
             delete array[idx];
         }
-        delete array;
     }
-    else {
-        delete array;
-    }
+    memset(array, 0, arrayCount * sizeof(T*));
+    delete[] array;
+    array = nullptr;
+    return array;
 }
 
 template <class T> uint DynaAllocArray<T>::ALLOC_UNITS = 10;

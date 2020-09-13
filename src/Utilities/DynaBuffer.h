@@ -75,6 +75,7 @@ public:
     UUID    getNextUUID();
     float   getNextFloat();
     double  getNextDouble();
+    long double getNextLongDouble();
     bool    getNextString(char* buf, uint count, bool addTerm);
     void    getNextString(char* buf, uint maxCount);
     bool    getNextString(String& str, uint maxCount = 0);
@@ -97,6 +98,7 @@ public:
     bool    putUUID(UUID* value);
     bool    putFloat(float value);
     bool    putDouble(double value);
+    bool    putLongDouble(long double value);
     bool    putString(const char* value, uint maxCount = 0, bool addTerm = true);
     bool    putString(const String& strValue, uint maxCount = 0, bool addTerm = true);
     bool    putBuffer(uint8_t* buf, uint offset, uint count);
