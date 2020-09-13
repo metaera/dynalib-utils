@@ -20,3 +20,8 @@ jobs:
 
       - name: Run Build Coverage
         run: ./build-coverage.sh
+
+      # - name: Push to Coveralls
+      #   uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
