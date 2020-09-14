@@ -17,5 +17,3 @@ valgrind-report.xml
 .idea
 cmake-build-debug
 cmake-build-release
-
-docs/html
