@@ -32,7 +32,7 @@ You can use docker container to build code in this project on all OS's
 You can run a container and map project code into directory to do all build processes.
 
 ```bash
-docker run -it --rm -v `pwd`:/build gvfn/clang-buildpack:ubuntu-10 bash
+docker run -it --rm -v `pwd`:/build -w /build gvfn/clang-buildpack:ubuntu-10 bash
 ```
 
 ### Ubuntu 18.04 LTS
