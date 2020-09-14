@@ -25,7 +25,6 @@ jobs:
           sudo chown -R $USER:$USER ./build
           sudo chown -R $USER:$USER ./docs
           sed -i -E  "s/\/github\/workspace\///g" build/coverage/lcov.info
-          touch ./docs/.nojekyll
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
