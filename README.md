@@ -161,7 +161,7 @@ $ doxygen
 $ firefox html/index.html
 ```
 
-![Doxygen Documentation](./docs/images/doxygen.png)
+![Doxygen Documentation](images/doxygen.png)
 
 ## Clang Tools
 
@@ -189,9 +189,9 @@ scan-build: Run 'scan-view /var/folders/...' to examine bug reports.
 $ scan-view /var/folders/...
 ```
 
-![Clang Static Analyzer Report](docs/images/clang_static_analyzer_1.png)
+![Clang Static Analyzer Report](images/clang_static_analyzer_1.png)
 
-![Clang Static Analyzer Report](docs/images/clang_static_analyzer_2.png)
+![Clang Static Analyzer Report](images/clang_static_analyzer_2.png)
 
 ### Clang-Tidy
 
@@ -284,7 +284,7 @@ $ llvm-cov show -format=html -o coverage ./UnitTests -instr-profile=default.prof
 $ firefox coverage/index.html
 ```
 
-![Coverage Report](./docs/images/coverage_report.png)
+![Coverage Report](images/coverage_report.png)
 
 ### Clang-Format
 
