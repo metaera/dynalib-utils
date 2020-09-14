@@ -20,17 +20,23 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
-            ./build-coverage.sh"
+            ./build-coverage.sh &&
+            ./build-docs.sh"
 
-      - name: Fix permissions
+      - name: Fix build outputs
         run: |
           sudo chown -R $USER:$USER ./build
-          cat ./build/coverage/lcov.info
+          sudo chown -R $USER:$USER ./docs
           sed -i -E  "s/\/github\/workspace\///g" build/coverage/lcov.info
-          cat ./build/coverage/lcov.info
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./build/coverage/lcov.info
+
+      - name: Push Docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html
