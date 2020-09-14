@@ -7,6 +7,7 @@
 |--------------|--------------------------------------------------------------------------------|
 | Github Actions       | ![build-release](https://github.com/metaera/dynalib-utils/workflows/build-release/badge.svg)         |
 | Coverage Reports     | [![Coverage Status](https://coveralls.io/repos/github/metaera/dynalib-utils/badge.svg?branch=master)](https://coveralls.io/github/metaera/dynalib-utils?branch=master) |
+| Docs                  | [https://metaera.github.io/dynalib-utils/](https://metaera.github.io/dynalib-utils/) |
 
 Example C++11 [CMake](https://cmake.org/)  project that incorporates awesome 
 [Clang](https://clang.llvm.org/) tooling, such as sanitizers, a code formatter, and code coverage
