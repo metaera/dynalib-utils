@@ -1,17 +1,11 @@
 name: build-release
 
-on:
-  push:
-    branches:
-      - '*'
-
+on: push
+  
 jobs:
   release:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
-    # container: 
-    #   image: gvfn/clang-buildpack:ubuntu-10
-    #   options: --privileged
 
     steps:
       - name: Check out Git repository
@@ -23,10 +17,59 @@ jobs:
           entrypoint: /bin/bash
           args: |
             -c "\
-            ./build-coverage.sh"
+            ./build-coverage.sh &&
+            ./build-docs.sh"
+
+      - name: Fix build outputs
+        run: |
+          sudo chown -R $USER:$USER ./build
+          sudo chown -R $USER:$USER ./docs
+          sed -i -E  "s/\/github\/workspace\///g" build/coverage/lcov.info
 
       - name: Push to Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: build/coverage/lcov.info
+          path-to-lcov: ./build/coverage/lcov.info
+
+      - name: Push Docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html/
+          enable_jekyll: false
+          allow_empty_commit: false
+          force_orphan: true
+          publish_branch: gh-pages
+
+      - name: get release notes
+        run: |
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
+          echo "===START==="
+          echo $GIT_RELEASE_NOTES
+          echo "====END===="
+          echo CURRENT_VERSION=$CURRENT_VERSION
+
+      - name: Create release ${{ env.GITHUB_TAG }}
+        if: github.ref == 'refs/heads/master'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.GITHUB_TAG }}
+          release_name: ${{ env.GITHUB_TAG }}
+          body: ${{ env.GIT_RELEASE_NOTES }}
+          draft: false
+          prerelease: false
+
+      - name: upload release asset - libdynalib-utils-${{ env.GITHUB_TAG }}.zip
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/libdynalib-utils.so
+          asset_name: libdynalib-utils.so
+          asset_content_type : "application/octet-stream"

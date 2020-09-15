@@ -6,7 +6,8 @@
 | Build Status |                                                                                |
 |--------------|--------------------------------------------------------------------------------|
 | Github Actions       | ![build-release](https://github.com/metaera/dynalib-utils/workflows/build-release/badge.svg)         |
-| Coverage Reports     |  [![Coverage Status](https://coveralls.io/repos/github/metaera/dynalib-utils/badge.svg)](https://coveralls.io/github/metaera/dynalib-utils) |
+| Coverage Reports     | [![Coverage Status](https://coveralls.io/repos/github/metaera/dynalib-utils/badge.svg?branch=master)](https://coveralls.io/github/metaera/dynalib-utils?branch=master) |
+| Docs                  | [https://metaera.github.io/dynalib-utils/](https://metaera.github.io/dynalib-utils/) |
 
 Example C++11 [CMake](https://cmake.org/)  project that incorporates awesome 
 [Clang](https://clang.llvm.org/) tooling, such as sanitizers, a code formatter, and code coverage
@@ -23,6 +24,16 @@ For C++ coding guidelines, see the
 [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines).
 
 ## Requirements
+
+### Docker
+
+You can use docker container to build code in this project on all OS's
+
+You can run a container and map project code into directory to do all build processes.
+
+```bash
+docker run -it --rm -v `pwd`:/build -w /build gvfn/clang-buildpack:ubuntu-10 bash
+```
 
 ### Ubuntu 18.04 LTS
 
@@ -150,7 +161,7 @@ $ doxygen
 $ firefox html/index.html
 ```
 
-![Doxygen Documentation](./docs/images/doxygen.png)
+![Doxygen Documentation](images/doxygen.png)
 
 ## Clang Tools
 
@@ -178,9 +189,9 @@ scan-build: Run 'scan-view /var/folders/...' to examine bug reports.
 $ scan-view /var/folders/...
 ```
 
-![Clang Static Analyzer Report](docs/images/clang_static_analyzer_1.png)
+![Clang Static Analyzer Report](images/clang_static_analyzer_1.png)
 
-![Clang Static Analyzer Report](docs/images/clang_static_analyzer_2.png)
+![Clang Static Analyzer Report](images/clang_static_analyzer_2.png)
 
 ### Clang-Tidy
 
@@ -273,7 +284,7 @@ $ llvm-cov show -format=html -o coverage ./UnitTests -instr-profile=default.prof
 $ firefox coverage/index.html
 ```
 
-![Coverage Report](./docs/images/coverage_report.png)
+![Coverage Report](images/coverage_report.png)
 
 ### Clang-Format
 
