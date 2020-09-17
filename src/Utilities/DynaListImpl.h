@@ -55,8 +55,8 @@ template <class T> DynaList<T>::DynaList(T* array, int count) {
 }
 
 template <class T> DynaList<T>::~DynaList() {
-    DynaAllocVect<T>::deleteVect(_members, _count, isFlags(OWNS_MEMBERS));
-    _members = nullptr;
+    clear();
+    _members = DynaAllocVect<T>::deleteVect(_members, _count, isFlags(OWNS_MEMBERS));
 }
 
 template <class T> DynaList<T>::DynaList(const DynaList<T>& other) {
@@ -138,13 +138,12 @@ template <class T> void DynaList<T>::_deleteRange(int frIndex, int toIndex) {
         memmove(_members + frIndex, _members + toIndex, (_count - toIndex) * sizeof(T*));
     }
     _count -= (toIndex - frIndex);
-    if (isFlags(AUTO_TRIM))
-        _deleteExcessCapacity();
-
     // Null out any remaining slots at the end of the list (the pointers will be in the list twice otherwise)
     for (int idx = _count; idx < _capacity; ++idx) {
         _members[idx] = nullptr;
     }
+    if (isFlags(AUTO_TRIM))
+        _deleteExcessCapacity();
 }
 
 template <class T> void DynaList<T>::_clearRange(int frIndex, int toIndex) {
@@ -153,6 +152,11 @@ template <class T> void DynaList<T>::_clearRange(int frIndex, int toIndex) {
     if (isFlags(OWNS_MEMBERS)) {
         for (int idx = frIndex; idx <= toIndex; ++idx) {
             delete _members[idx];
+            _members[idx] = nullptr;
+        }
+    }
+    else {
+        for (int idx = frIndex; idx <= toIndex; ++idx) {
             _members[idx] = nullptr;
         }
     }
@@ -167,6 +171,8 @@ template <class T> void DynaList<T>::_nullRange(int frIndex, int toIndex) {
     for (int idx = frIndex; idx <= toIndex; ++idx) {
         _members[idx] = nullptr;
     }
+    if (isFlags(AUTO_TRIM))
+        _deleteExcessCapacity();
 }
 
 template <class T> void DynaList<T>::_deleteOrClear(int frIndex, int toIndex) {

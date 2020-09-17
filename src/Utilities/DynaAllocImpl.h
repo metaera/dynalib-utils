@@ -86,15 +86,12 @@ template <class T> T** DynaAllocVect<T>::reallocVect(T** array, uint oldCount, u
                  * if we are the owners of the members.
                  */
                 memset(array, 0, oldCount * sizeof(T*));
-                /**
-                 * Important! Use a regular "delete" here, not "delete[]".  We don't want the members
-                 * to get deleted, since we have just copied their pointers to the new array.  We just want the array
-                 * itself to be deleted.
-                 */
                 delete[] array;
+                
+                if (newCount > oldCount) {
+                    memset((newArray + oldCount), 0, (newCount - oldCount) * sizeof(T*));
+                }
                 array = newArray;
-                if (newCount > oldCount)
-                    memset((array + oldCount), 0, (newCount - oldCount) * sizeof(T*));
             }
         }
         catch (std::exception& e) {

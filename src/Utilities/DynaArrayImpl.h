@@ -95,12 +95,12 @@ template <class T> void DynaArray<T>::_deleteRange(int frIndex, int toIndex) {
         ++toIndex;
     memmove(_members + frIndex, _members + toIndex, (_count - toIndex) * sizeof(T));
     _count -= (toIndex - frIndex);
-    if (IS_ALL_SET(_flags, AUTO_TRIM))
-        _deleteExcessCapacity();
     // Zero out any remaining slots at the end of the array
     for (int idx = _count; idx < _capacity; ++idx) {
         _members[idx] = 0;
     }
+    if (IS_ALL_SET(_flags, AUTO_TRIM))
+        _deleteExcessCapacity();
 }
 
 template <class T> void DynaArray<T>::_clearRange(int frIndex, int toIndex) {
