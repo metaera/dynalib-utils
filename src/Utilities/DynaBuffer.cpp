@@ -46,7 +46,7 @@ void DynaBuffer::zeroFill(int fromIndex, int toIndex) {
     if (toIndex >= fromIndex)
         memset(_buffer + fromIndex, 0, (size_t)(toIndex - fromIndex) + 1);
 }
-
+//TODO: clear the buffer space before forgetting
 void DynaBuffer::clear() {
     if (!isEmpty()) {
         _bufPos = _bufEnd = 0;
