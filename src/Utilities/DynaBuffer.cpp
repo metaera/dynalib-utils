@@ -1,8 +1,12 @@
-/*
- * RingBuffer.cpp
- *
- *  Created on: 31/08/2017
- *      Author: ken
+/**
+ * @file DynaBuffer.cpp
+ * @author Ken Kopelson (ken@metaera.com)
+ * @brief 
+ * @version 0.1
+ * @date 2020-09-19
+ * 
+ * @copyright Copyright (c) 2020
+ * 
  */
 
 #include <cstdio>
@@ -10,10 +14,13 @@
 #include "ICacheConst.h"
 #include "DynaBuffer.h"
 #include "Exception.h"
+#include "CheckForError.h"
 
 bool DynaBuffer::THROW_EXCEPTIONS = true;
 
-DynaBuffer::DynaBuffer() : _buffer(nullptr), _bufSize(0), _bufEnd(0), _bufPos(0), _isDirty(false) {
+DynaBuffer::DynaBuffer() :
+    _buffer(nullptr), _bufSize(0), _bufEnd(0),
+    _bufPos(0), _isDirty(false), _headerSize(0), _elemSize(0) {
 }
 
 DynaBuffer::DynaBuffer(uint size, bool zeroOut) : DynaBuffer() {
@@ -102,6 +109,219 @@ bool DynaBuffer::deleteRegion(int index, int count) {
         }
         zeroFill(_bufEnd - frIndex);
         _isDirty = true;
+        return true;
+    }
+    return false;
+}
+
+void DynaBuffer::setElemMode(uint headerSize, uint elemSize) {
+    _headerSize = headerSize;
+    _elemSize   = elemSize;
+}
+
+uint DynaBuffer::getElemCapacity() {
+    return _elemSize > 0 ? ( _bufSize - _headerSize ) / _elemSize : 0;
+}
+
+uint DynaBuffer::getElemCount() {
+    return _elemSize > 0 ? ( _bufEnd - _headerSize ) / _elemSize : 0;
+}
+
+bool DynaBuffer::getHeader(uint8_t& headerBuf) {
+    if (_headerSize > 0) {
+        _bufPos = 0;
+        if (requiresRemaining(_headerSize)) {
+            memcpy(&headerBuf, _buffer + _bufPos, _headerSize);
+            _bufPos += _headerSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::putHeader(uint8_t& headerBuf) {
+    if (_headerSize > 0) {
+        _bufPos = 0;
+        if (hasRemainingCapacity(_headerSize)) {
+            memcpy(_buffer + _bufPos, &headerBuf, _headerSize);
+            _bufPos += _headerSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::getElem(int index, uint8_t& elemBuf) {
+    if (_elemSize > 0) {
+        _bufPos = _headerSize + (index * _elemSize);
+        if (requiresRemaining(_elemSize)) {
+            memcpy(&elemBuf, _buffer + _bufPos, _elemSize);
+            _bufPos += _elemSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::setElem(int index, uint8_t& elemBuf) {
+    if (_elemSize > 0) {
+        _bufPos = _headerSize + (index * _elemSize);
+        if (hasRemainingCapacity(_elemSize)) {
+            memcpy(_buffer + _bufPos, &elemBuf, _elemSize);
+            _bufPos += _elemSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::getNextElem(uint8_t& elemBuf) {
+    if (_elemSize > 0) {
+        if (requiresRemaining(_elemSize)) {
+            memcpy(&elemBuf, _buffer + _bufPos, _elemSize);
+            _bufPos += _elemSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::insertElem(int index, uint8_t& elemBuf) {
+    if (_elemSize > 0) {
+        _bufPos = _headerSize + (index * _elemSize);
+        if (insertRegion(_bufPos, _elemSize)) {
+            memcpy(_buffer + _bufPos, &elemBuf, _elemSize);
+            _bufPos += _elemSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::insertElems(int index, uint8_t& elemBuf, int count) {
+    if (_elemSize > 0) {
+        auto insertSize = _elemSize * count;
+        _bufPos = _headerSize + (index * _elemSize);
+        if (insertRegion(_bufPos, insertSize)) {
+            memcpy(_buffer + _bufPos, &elemBuf, insertSize);
+            _bufPos += _elemSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::appendElem(uint8_t& elemBuf) {
+    if (_elemSize > 0) {
+        int index = getElemCount();
+        _bufPos = _headerSize + (index * _elemSize);
+        if (hasRemainingCapacity(_elemSize)) {
+            memcpy(_buffer + _bufPos, &elemBuf, _elemSize);
+            _bufPos += _elemSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::removeElem(int index, uint8_t& elemBuf) {
+    if (_elemSize > 0) {
+        _bufPos = _headerSize + (index * _elemSize);
+        if (requiresRemaining(_elemSize)) {
+            memcpy(&elemBuf, _buffer + _bufPos, _elemSize);
+            if (deleteRegion(_bufPos, _elemSize)) {
+                _bufEnd -= _elemSize;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::deleteElems(int frIndex, int toIndex) {
+    if (_elemSize > 0) {
+        int count = getElemCount();
+        if (toIndex == END_OF_LIST) {
+            toIndex = count;
+        }
+        else {
+            ++toIndex;
+        }
+        CheckForError::assertInBounds(frIndex, toIndex - 1);
+        CheckForError::assertInBounds(toIndex, count);
+
+        int delCount = toIndex - frIndex;
+        int delSize  = delCount * _elemSize;
+        _bufPos = _headerSize + (frIndex * _elemSize);
+        if (deleteRegion(_bufPos, delSize)) {
+            _bufEnd -= delSize;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::moveElem(int index, int destIndex) {
+    if (_elemSize > 0) {
+        int count = getElemCount();
+        CheckForError::assertInBounds(index, count - 1);
+        CheckForError::assertInBounds(destIndex, count);
+        if (index != destIndex) {
+            uint8_t buf[_elemSize];
+            memmove(buf, _buffer + index, _elemSize);
+            if (destIndex < index) {
+                int moveCount = index - destIndex;
+                memmove(_buffer + destIndex + 1, _buffer + destIndex, moveCount * _elemSize);
+                memmove(_buffer + destIndex, buf, _elemSize);
+                return true;
+            }
+            else if (index < --destIndex){
+                int moveCount = destIndex - index;
+                memmove(_buffer + index, _buffer + index + 1, moveCount * _elemSize);
+                memmove(_buffer + destIndex, buf, _elemSize);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::moveElems(int frIndex, int toIndex, int destIndex){
+    if (_elemSize > 0) {
+        int count = getElemCount();
+        CheckForError::assertInBounds( frIndex, toIndex );
+        CheckForError::assertInBounds( toIndex, count - 1 );
+        CheckForError::assertInBounds( destIndex, count );
+        if (( frIndex < destIndex - 1 ) || ( destIndex < frIndex )) {
+            int range = toIndex - frIndex + 1;
+            uint8_t buf[range * _elemSize];
+            memmove( buf, _buffer + frIndex, range * _elemSize );
+            if ( destIndex < frIndex ) {
+                int moveCount = frIndex - destIndex;
+                memmove(_buffer + destIndex + range, _buffer + destIndex, moveCount * _elemSize);
+                memmove(_buffer + destIndex, buf, _elemSize);
+                return true;
+            }
+            else if ( toIndex < --destIndex ) {
+                int moveCount = destIndex - toIndex;
+                memmove(_buffer + frIndex, _buffer + toIndex + 1, moveCount * _elemSize);
+                memmove(_buffer + frIndex + moveCount, buf, _elemSize);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool DynaBuffer::moveElems(int frIndex, int toIndex, DynaBuffer& dest, int destIndex) {
+    if (_elemSize > 0) {
+        int count = getElemCount();
+        CheckForError::assertInBounds( frIndex, toIndex );
+        CheckForError::assertInBounds( toIndex, count - 1 );
+        CheckForError::assertInBounds( destIndex, dest.getElemCount() );
+        auto* fromBuf = getInternalTypedArrayAtPos(_headerSize + (frIndex * _elemSize));
+        dest.insertElems(destIndex, *fromBuf, toIndex - frIndex + 1);
+        deleteElems(frIndex, toIndex);
         return true;
     }
     return false;

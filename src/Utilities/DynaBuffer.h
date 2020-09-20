@@ -1,8 +1,12 @@
-/*
- * DynaBuffer.h
- *
- *  Created on: 31/08/2017
- *      Author: ken
+/**
+ * @file DynaBuffer.h
+ * @author Ken Kopelson (ken@metaera.com)
+ * @brief 
+ * @version 0.1
+ * @date 2020-09-19
+ * 
+ * @copyright Copyright (c) 2020
+ * 
  */
 
 #ifndef DYNABUFFER_H_
@@ -18,6 +22,8 @@ class DynaBuffer : ICopyable<DynaBuffer> {
     uint     _bufSize;
     uint     _bufEnd;
     uint     _bufPos;
+    uint     _headerSize;
+    uint     _elemSize;
     bool     _isDirty;
 
 public:
@@ -44,6 +50,24 @@ public:
     uint    adjustPos(int delta);
     bool    insertRegion(int index, int count);
     bool    deleteRegion(int index, int count);
+    
+    void    setElemMode(uint headerSize, uint elemSize);
+    ulong   getElemPos(int index) { return _headerSize + (index * _elemSize); }
+    uint    getElemCapacity();
+    uint    getElemCount();
+    bool    getHeader(uint8_t& headerBuf);
+    bool    putHeader(uint8_t& headerBuf);
+    bool    getElem(int index, uint8_t& elemBuf);
+    bool    setElem(int index, uint8_t& elemBuf);
+    bool    getNextElem(uint8_t& elemBuf);
+    bool    insertElem(int index, uint8_t& elemBuf);
+    bool    insertElems(int index, uint8_t& elemBuf, int count);
+    bool    appendElem(uint8_t& elemBuf);
+    bool    removeElem(int index, uint8_t& elemBuf);
+    bool    deleteElems(int frIndex, int toIndex);
+    bool    moveElem(int index, int destIndex);
+    bool    moveElems(int frIndex, int toIndex, int destIndex);
+    bool    moveElems(int frIndex, int toIndex, DynaBuffer& dest, int destIndex);
 
     void    invalidate();
     bool    isEmpty();
