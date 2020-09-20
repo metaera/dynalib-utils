@@ -262,28 +262,7 @@ bool DynaBuffer::deleteElems(int frIndex, int toIndex) {
 }
 
 bool DynaBuffer::moveElem(int index, int destIndex) {
-    if (_elemSize > 0) {
-        int count = getElemCount();
-        CheckForError::assertInBounds(index, count - 1);
-        CheckForError::assertInBounds(destIndex, count);
-        if (index != destIndex) {
-            uint8_t buf[_elemSize];
-            memmove(buf, _buffer + index, _elemSize);
-            if (destIndex < index) {
-                int moveCount = index - destIndex;
-                memmove(_buffer + destIndex + 1, _buffer + destIndex, moveCount * _elemSize);
-                memmove(_buffer + destIndex, buf, _elemSize);
-                return true;
-            }
-            else if (index < --destIndex){
-                int moveCount = destIndex - index;
-                memmove(_buffer + index, _buffer + index + 1, moveCount * _elemSize);
-                memmove(_buffer + destIndex, buf, _elemSize);
-                return true;
-            }
-        }
-    }
-    return false;
+    return moveElems(index, index, destIndex);
 }
 
 bool DynaBuffer::moveElems(int frIndex, int toIndex, int destIndex){
