@@ -13,6 +13,7 @@ set(UTIL_SOURCES
     TestObject.cpp
     TestDynaList.cpp
     TestDynaRingBuffer.cpp
+    TestDynaBuffer.cpp
     TestDynaHashMap.cpp
     TestHashCoder.cpp
     TestSynch.cpp
@@ -29,6 +30,7 @@ set(UTIL_SOURCES
 include_directories(${TEST_SOURCE_DIRECTORY})
 
 add_executable(TestUtils ${UTIL_SOURCES})
+#target_code_coverage(TestUtils AUTO)
 target_link_libraries(TestUtils PUBLIC dynalib-utils)
 
 add_test(NAME TestUtils COMMAND TestUtils)
