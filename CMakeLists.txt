@@ -230,6 +230,9 @@ install(FILES ${CRYPTO_INCLUDES} DESTINATION include/dynalib/crypto)
 include(${CMAKE_SOURCE_DIR}/cmake/unit_test.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/clang_tools.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/cppcheck.cmake)
+#include(${CMAKE_SOURCE_DIR}/cmake/code-coverage.cmake)
+#add_code_coverage()
+#add_code_coverage_all_targets()
 
 # Any source files added to include/ or src/ will automatically be added to the project.
 file(GLOB_RECURSE INCLUDE_FILES ${CMAKE_SOURCE_DIR}/include/*.h)
