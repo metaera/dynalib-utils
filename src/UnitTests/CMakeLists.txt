@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(UTIL_SOURCES
     TestUtilsMain.cpp
     TestDynaArray.cpp
+    TestBTreeArray.cpp
     TestObject.cpp
     TestDynaList.cpp
     TestDynaRingBuffer.cpp
