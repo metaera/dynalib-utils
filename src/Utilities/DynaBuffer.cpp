@@ -53,7 +53,7 @@ void DynaBuffer::zeroFill(int fromIndex, int toIndex) {
     if (toIndex >= fromIndex)
         memset(_buffer + fromIndex, 0, (size_t)(toIndex - fromIndex) + 1);
 }
-
+//TODO: clear the buffer space before forgetting
 void DynaBuffer::clear() {
     if (!isEmpty()) {
         _bufPos = _bufEnd = 0;
@@ -296,6 +296,16 @@ bool DynaBuffer::moveElems(int frIndex, int toIndex, int destIndex){
     return false;
 }
 
+/**
+ * @brief Move element from one Buffer to Another one
+ * 
+ * @param frIndex starting element index  in source buffer
+ * @param toIndex end element (cinclusive) in source buffer
+ * @param dest destination buffer pointer
+ * @param destIndex destination index int which insert he items
+ * @return true if current buffer not empty and is move successed
+ * @return false if current buffer is empty
+ */
 bool DynaBuffer::moveElems(int frIndex, int toIndex, DynaBuffer* dest, int destIndex) {
     if (_elemSize > 0) {
         int count = getElemCount();

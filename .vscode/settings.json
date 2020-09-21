@@ -11,6 +11,8 @@
     "testMate.cpp.test.executables": "{build*}/UnitTests/{Test}*",
     "files.associations": {
         "string": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp"
     }
 }
