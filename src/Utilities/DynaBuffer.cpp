@@ -20,7 +20,7 @@ bool DynaBuffer::THROW_EXCEPTIONS = true;
 
 DynaBuffer::DynaBuffer() :
     _buffer(nullptr), _bufSize(0), _bufEnd(0),
-    _bufPos(0), _isDirty(false), _headerSize(0), _elemSize(0) {
+    _bufPos(0), _headerSize(0), _elemSize(0), _isDirty(false) {
 }
 
 DynaBuffer::DynaBuffer(uint size, bool zeroOut) : DynaBuffer() {
@@ -238,6 +238,10 @@ bool DynaBuffer::removeElem(int index, uint8_t& elemBuf) {
     return false;
 }
 
+bool DynaBuffer::deleteElem(int index) {
+    return deleteElems(index, index);
+}
+
 bool DynaBuffer::deleteElems(int frIndex, int toIndex) {
     if (_elemSize > 0) {
         int count = getElemCount();
@@ -292,14 +296,15 @@ bool DynaBuffer::moveElems(int frIndex, int toIndex, int destIndex){
     return false;
 }
 
-bool DynaBuffer::moveElems(int frIndex, int toIndex, DynaBuffer& dest, int destIndex) {
+bool DynaBuffer::moveElems(int frIndex, int toIndex, DynaBuffer* dest, int destIndex) {
     if (_elemSize > 0) {
         int count = getElemCount();
         CheckForError::assertInBounds( frIndex, toIndex );
         CheckForError::assertInBounds( toIndex, count - 1 );
-        CheckForError::assertInBounds( destIndex, dest.getElemCount() );
+        CheckForError::assertNotNull(dest);
+        CheckForError::assertInBounds( destIndex, dest->getElemCount() );
         auto* fromBuf = getInternalTypedArrayAtPos(_headerSize + (frIndex * _elemSize));
-        dest.insertElems(destIndex, *fromBuf, toIndex - frIndex + 1);
+        dest->insertElems(destIndex, *fromBuf, toIndex - frIndex + 1);
         deleteElems(frIndex, toIndex);
         return true;
     }

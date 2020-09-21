@@ -4,7 +4,7 @@
 file(GLOB_RECURSE TEST_SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/UnitTests/*.cpp)
 
 #TODO: Remove excluded Tests
-list(REMOVE_ITEM TEST_SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/UnitTests/TestDynaHashMap.cpp")
+#list(REMOVE_ITEM TEST_SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/UnitTests/TestDynaHashMap.cpp")
 
 add_executable(UnitTests ${SOURCE_FILES_NO_MAIN} ${TEST_SOURCE_FILES})
 

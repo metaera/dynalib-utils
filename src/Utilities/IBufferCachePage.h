@@ -1,6 +1,13 @@
-//
-// Created by Ken Kopelson on 6/03/18.
-//
+/**
+ * @file IBufferCachePage.h
+ * @author Ken Kopelson (ken@metaera.com)
+ * @brief 
+ * @version 0.1
+ * @date 2020-09-19
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef IBUFFERCACHEPAGE_H
 #define IBUFFERCACHEPAGE_H

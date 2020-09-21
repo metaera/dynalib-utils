@@ -20,13 +20,7 @@ DynaBufferCache<T>::DynaBufferCache(PageFile* file) : DynaCache<T>() {
 template<class T>
 void DynaBufferCache<T>::setListener(IDynaCacheListener<T>* listener) {
     DynaCache<T>::setListener(listener);
-//    throw IllegalArgumentException("Requires 'IDynaBufferCacheListener'");
 }
-
-//template<class T>
-//void DynaBufferCache<T>::setListener(IDynaBufferCacheListener<T>* listener) {
-//    DynaCache<T>::setListener(listener);
-//}
 
 template<class T>
 void DynaBufferCache<T>::flushPage(T* page) {
@@ -99,14 +93,5 @@ T* DynaBufferCache<T>::putPage(Index keyValue, DynaBuffer* buffer) {
     LinkedEntry<T>* entry = putPageEntry(keyValue, buffer);
     return entry != nullptr ? entry->getObject() : nullptr;
 }
-
-// template<class T>
-// void DynaBufferCache<T>::purgePages(double removePercent = 0.80) {
-//     int pagesToRemove = (int)(((double)_pageList->count()) * removePercent);
-//     for (int i = 0; i < pagesToRemove; ++i) {
-//         removeLastPage();
-//     }
-// }
-
 
 #endif

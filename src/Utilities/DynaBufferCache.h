@@ -25,7 +25,6 @@ public:
     LinkedEntry<T>* useLastPage(Index keyValue, DynaBuffer* buffer);
     LinkedEntry<T>* putPageEntry(Index keyValue, DynaBuffer* buffer);
     T*   putPage(Index keyValue, DynaBuffer* buffer);
-    // void purgePages(double removePercent = 0.80) override;
 };
 
 

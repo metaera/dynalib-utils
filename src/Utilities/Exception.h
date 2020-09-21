@@ -26,6 +26,12 @@ public:
     explicit MethodNotImplemented(const String& msg) : Exception(msg) {}
 };
 
+class MethodNotSupported : public Exception {
+public:
+    MethodNotSupported() : Exception() {};
+    explicit MethodNotSupported(const String& msg) : Exception(msg) {}
+};
+
 class StrictViolationException : public Exception {
 public:
     StrictViolationException() : Exception() {};

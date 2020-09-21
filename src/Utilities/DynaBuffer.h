@@ -64,10 +64,11 @@ public:
     bool    insertElems(int index, uint8_t& elemBuf, int count);
     bool    appendElem(uint8_t& elemBuf);
     bool    removeElem(int index, uint8_t& elemBuf);
+    bool    deleteElem(int index);
     bool    deleteElems(int frIndex, int toIndex);
     bool    moveElem(int index, int destIndex);
     bool    moveElems(int frIndex, int toIndex, int destIndex);
-    bool    moveElems(int frIndex, int toIndex, DynaBuffer& dest, int destIndex);
+    bool    moveElems(int frIndex, int toIndex, DynaBuffer* dest, int destIndex);
 
     void    invalidate();
     bool    isEmpty();

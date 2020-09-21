@@ -10,6 +10,7 @@
     "testMate.cpp.test.workingDirectory": "${workspaceFolder}",
     "testMate.cpp.test.executables": "{build*}/UnitTests/{Test}*",
     "files.associations": {
-        "string": "cpp"
+        "string": "cpp",
+        "cstring": "cpp"
     }
 }
