@@ -344,6 +344,7 @@ template <typename K, typename V> bool DynaBTreeLeafNode<K,V>::getKeyFromData(ui
     DynaTreeLeafElem<K,V> tempElem;
     setElemDataPos(index, tempElem);
     tempElem.getKeyFromData(key);
+    return true;
 }
 
 template <typename K, typename V> void DynaBTreeLeafNode<K,V>::setKeyToData(uint index, K& key) {
@@ -509,6 +510,7 @@ template <typename K> bool DynaBTreeInnerNode<K>::getKeyFromData(uint index, K& 
     DynaTreeInnerElem<K> tempElem;
     setElemDataPos(index, tempElem);
     tempElem.getKeyFromData(key);
+    return true;
 }
 
 template <typename K> void DynaBTreeInnerNode<K>::setKeyToData(uint index, K& key) {
