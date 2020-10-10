@@ -62,7 +62,16 @@ namespace Graph {
         static bool present(const Node& node, const String& fldName, Node& result);
         static int  getListLeadingScalarCount(const Node& node);
 
-        explicit Node(NodeType type = NodeType::UNTYPED, bool ownsData = true);
+        Node();
+        explicit Node(NodeType type, bool ownsData = true);
+        Node(const char* value, bool ownsData = true);
+        // explicit Node(char* value, bool ownsData = true);
+        // explicit Node(String* value, bool ownsData = true);
+        // explicit Node(const String& value, bool ownsData = true);
+        // explicit Node(String& value, bool ownsData = true);
+        Node(int value, bool ownsData = true);
+        Node(long long value, bool ownsData = true);
+
         virtual ~Node();
         Node(const Node& other);
         Node*      copy() override;
