@@ -465,6 +465,19 @@ ulonglong DynaBuffer::getNextULongLong() {
     return value;
 }
 
+int64_t DynaBuffer::getNextInt64() {
+    return (int64_t)getNextUInt64();
+}
+
+uint64_t DynaBuffer::getNextUInt64() {
+    uint64_t value = 0LL;
+    if (requiresRemaining(sizeof(uint64_t))) {
+        value = *(uint64_t*)(_buffer + _bufPos);
+        _bufPos += sizeof(uint64_t);
+    }
+    return value;
+}
+
 index_t DynaBuffer::getNextIndex() {
     index_t value = 0;
     if (requiresRemaining(sizeof(index_t))) {
@@ -652,6 +665,24 @@ bool DynaBuffer::putLongLong(long long value) {
 bool DynaBuffer::putULongLong(ulonglong value) {
     if (hasRemainingCapacity(sizeof(ulonglong))) {
         *(ulonglong*)(_buffer + _bufPos) = value;
+        _bufPos += sizeof(ulonglong);
+        _isDirty = true;
+        if (_bufPos > _bufEnd)
+            _bufEnd = _bufPos;
+        return true;
+    }
+    else if (THROW_EXCEPTIONS)
+        throw BufferOverrunException();
+    return false;
+}
+
+bool DynaBuffer::putInt64(int64_t value) {
+    return putUInt64((uint64_t)value);
+}
+
+bool DynaBuffer::putUInt64(uint64_t value) {
+    if (hasRemainingCapacity(sizeof(uint64_t))) {
+        *(uint64_t*)(_buffer + _bufPos) = value;
         _bufPos += sizeof(ulonglong);
         _isDirty = true;
         if (_bufPos > _bufEnd)

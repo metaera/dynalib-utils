@@ -96,6 +96,8 @@ public:
     ulong   getNextULong();
     long long getNextLongLong();
     ulonglong getNextULongLong();
+    int64_t  getNextInt64();
+    uint64_t getNextUInt64();
     index_t getNextIndex();
     UUID    getNextUUID();
     float   getNextFloat();
@@ -119,6 +121,8 @@ public:
     bool    putULong(ulong value);
     bool    putLongLong(long long value);
     bool    putULongLong(ulonglong value);
+    bool    putInt64(int64_t value);
+    bool    putUInt64(uint64_t value);
     bool    putIndex(index_t value);
     bool    putUUID(UUID* value);
     bool    putFloat(float value);
