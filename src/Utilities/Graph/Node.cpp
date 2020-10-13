@@ -38,11 +38,53 @@ namespace Graph {
         return count;
     }
 
-    Node::Node(NodeType nodeType, bool ownsData) : _ownsData(true), _key(nullptr) {
+    Node::Node() : _ownsData(true), _key(nullptr) {
         _nodeType   = NodeType::UNTYPED;
         _scalarType = ScalarType::NONE;
+    }
+
+    Node::Node(NodeType nodeType, bool ownsData) : Node() {
         setOwnsData(ownsData);
         _ensureNodeType(nodeType);
+    }
+
+    Node::Node(const char* value, bool ownsData) : Node() {
+        setScalar(value);
+        setOwnsData(ownsData);
+    }
+
+    // Node::Node(char* value, bool ownsData) : Node() {
+    //     setScalar(value);
+    //     setOwnsData(ownsData);
+    // }
+
+    // Node::Node(String* value, bool ownsData) : Node() {
+    //     setScalar(value->c_str());
+    //     setOwnsData(ownsData);
+    // }
+
+    // Node::Node(const String& value, bool ownsData) : Node() {
+    //     setScalar(value.c_str());
+    //     setOwnsData(ownsData);
+    // }
+
+    // Node::Node(String& value, bool ownsData) : Node() {
+    //     setScalar(value.c_str());
+    //     setOwnsData(ownsData);
+    // }
+
+    Node::Node(int value, bool ownsData) : _ownsData(true), _key(nullptr) {
+        _nodeType   = NodeType::UNTYPED;
+        _scalarType = ScalarType::NONE;
+        setScalar((long long)value);
+        setOwnsData(ownsData);
+    }
+
+    Node::Node(long long value, bool ownsData) : _ownsData(true), _key(nullptr) {
+        _nodeType   = NodeType::UNTYPED;
+        _scalarType = ScalarType::NONE;
+        setScalar(value);
+        setOwnsData(ownsData);
     }
 
     Node::~Node() {
