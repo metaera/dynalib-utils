@@ -22,6 +22,6 @@
     typedef int32_t index_t;
 #endif
 
-MAKE_ARRAYTYPE_DEF(index_t, Index);
+MAKE_ARRAYTYPE_DEF(index_t, IndexRef);
 
 #endif //ICACHECONST_H
