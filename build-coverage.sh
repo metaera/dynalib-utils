@@ -9,3 +9,4 @@ llvm-profdata merge -sparse default.profraw -o default.profdata
 llvm-cov show -format=html -o coverage ./UnitTests -instr-profile=default.profdata
 llvm-cov report -instr-profile=default.profdata ./UnitTests
 llvm-cov export -format=lcov -instr-profile=default.profdata -object ./UnitTests > coverage/lcov.info
+make install
