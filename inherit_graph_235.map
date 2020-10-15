@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classIComparable.html" title="IComparable\&lt; MapEntry\l\&lt; IntWrapper, LinkedEntry\l\&lt; T \&gt; \&gt; \&gt;" alt="" coords="5,5,199,61"/>
+<area shape="rect" id="node2" href="$classMapEntry.html" title="MapEntry\&lt; IntWrapper,\l LinkedEntry\&lt; T \&gt; \&gt;" alt="" coords="247,53,420,94"/>
+<area shape="rect" id="node3" href="$classICopyable.html" title="ICopyable\&lt; MapEntry\l\&lt; IntWrapper, LinkedEntry\l\&lt; T \&gt; \&gt; \&gt;" alt="" coords="5,85,199,141"/>
+</map>

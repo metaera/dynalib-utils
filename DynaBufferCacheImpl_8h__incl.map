@@ -1,0 +1,28 @@
+<map id="/github/workspace/src/Utilities/DynaBufferCacheImpl.h" name="/github/workspace/src/Utilities/DynaBufferCacheImpl.h">
+<area shape="rect" id="node2" href="$DynaBufferCache_8h.html" title="DynaBufferCache.h" alt="" coords="1101,95,1248,121"/>
+<area shape="rect" id="node40" href="$DynaCache_8h.html" title="DynaCache.h" alt="" coords="1209,169,1317,196"/>
+<area shape="rect" id="node46" href="$IDynaBufferCacheListener_8h.html" title="IDynaBufferCacheListener.h" alt="" coords="1432,169,1635,196"/>
+<area shape="rect" id="node3" href="$PageFile_8h.html" title="PageFile.h" alt="" coords="1065,319,1151,345"/>
+<area shape="rect" id="node5" href="$String_8h.html" title="String.h" alt="" coords="768,692,840,719"/>
+<area shape="rect" id="node25" href="$DynaBuffer_8h.html" title="DynaBuffer.h" alt="" coords="1461,393,1568,420"/>
+<area shape="rect" id="node26" href="$ICacheConst_8h.html" title="ICacheConst.h" alt="" coords="1657,468,1772,495"/>
+<area shape="rect" id="node15" href="$IHashable_8h.html" title="IHashable.h" alt="" coords="1415,767,1513,793"/>
+<area shape="rect" id="node17" href="$ICopyable_8h.html" title="ICopyable.h" alt="" coords="159,916,257,943"/>
+<area shape="rect" id="node18" href="$HashCoder_8h.html" title="HashCoder.h" alt="" coords="1287,767,1391,793"/>
+<area shape="rect" id="node21" href="$Utils_8h.html" title="Utils.h" alt="" coords="841,767,905,793"/>
+<area shape="rect" id="node16" href="$IComparable_8h.html" title="IComparable.h" alt="" coords="1508,841,1625,868"/>
+<area shape="rect" id="node19" href="$TypeDefs_8h.html" title="TypeDefs.h" alt="" coords="1893,916,1987,943"/>
+<area shape="rect" id="node22" href="$DynaList_8h.html" title="DynaList.h" alt="" coords="1393,841,1484,868"/>
+<area shape="rect" id="node34" href="$UUID_8h.html" title="UUID.h" alt="" coords="1537,617,1605,644"/>
+<area shape="rect" id="node27" href="$IndexConfig_8h.html" title="IndexConfig.h" alt="" coords="1639,767,1750,793"/>
+<area shape="rect" id="node28" href="$DynaArray_8h.html" title="DynaArray.h" alt="" coords="1649,841,1751,868"/>
+<area shape="rect" id="node30" href="$DynaHashMap_8h.html" title="DynaHashMap.h" alt="" coords="1176,543,1304,569"/>
+<area shape="rect" id="node33" href="$Exception_8h.html" title="Exception.h" alt="" coords="1113,617,1212,644"/>
+<area shape="rect" id="node35" href="$ISAAC64Random_8h.html" title="crypto/ISAAC64Random.h" alt="" coords="2155,841,2343,868"/>
+<area shape="rect" id="node36" href="$standard_8h.html" title="standard.h" alt="" coords="2245,916,2336,943"/>
+<area shape="rect" id="node41" href="$DynaLinkedList_8h.html" title="DynaLinkedList.h" alt="" coords="1017,543,1151,569"/>
+<area shape="rect" id="node42" href="$IntWrapper_8h.html" title="IntWrapper.h" alt="" coords="1460,692,1564,719"/>
+<area shape="rect" id="node43" href="$IDynaCacheListener_8h.html" title="IDynaCacheListener.h" alt="" coords="1512,244,1675,271"/>
+<area shape="rect" id="node44" href="$ICachePage_8h.html" title="ICachePage.h" alt="" coords="1475,319,1584,345"/>
+<area shape="rect" id="node45" href="$ICacheFile_8h.html" title="ICacheFile.h" alt="" coords="1694,393,1794,420"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classIComparable.html" title="IComparable\&lt; DynaAppender \&gt;" alt="" coords="5,5,236,32"/>
+<area shape="rect" id="node2" href="$classIHashable.html" title="IHashable\&lt; DynaAppender \&gt;" alt="" coords="284,5,497,32"/>
+<area shape="rect" id="node3" href="$classDynaAppender.html" title="DynaAppender" alt="" coords="545,31,664,57"/>
+<area shape="rect" id="node4" href="$classICopyable.html" title="ICopyable\&lt; DynaAppender \&gt;" alt="" coords="284,56,497,83"/>
+</map>

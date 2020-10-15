@@ -1,0 +1,10 @@
+<map id="DynaAppender" name="DynaAppender">
+<area shape="rect" id="node2" href="$classIHashable.html" title="IHashable\&lt; DynaAppender \&gt;" alt="" coords="612,5,825,32"/>
+<area shape="rect" id="node3" href="$classIComparable.html" title="IComparable\&lt; DynaAppender \&gt;" alt="" coords="296,5,527,32"/>
+<area shape="rect" id="node4" href="$classICopyable.html" title="ICopyable\&lt; DynaAppender \&gt;" alt="" coords="612,56,825,83"/>
+<area shape="rect" id="node5" href="$classDynaOutputSink.html" title="DynaOutputSink" alt="" coords="655,107,783,133"/>
+<area shape="rect" id="node6" href="$classIHashable.html" title="IHashable\&lt; DynaOutputSink \&gt;" alt="" coords="300,56,523,83"/>
+<area shape="rect" id="node7" href="$classIComparable.html" title="IComparable\&lt; DynaOutputSink \&gt;" alt="" coords="5,56,247,83"/>
+<area shape="rect" id="node8" href="$classICopyable.html" title="ICopyable\&lt; DynaOutputSink \&gt;" alt="" coords="300,107,523,133"/>
+<area shape="rect" id="node9" href="$classDynaLoggerManager.html" title="DynaLoggerManager" alt="" coords="333,157,489,184"/>
+</map>

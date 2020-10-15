@@ -1,0 +1,5 @@
+<map id="String" name="String">
+<area shape="rect" id="node2" href="$classIHashable.html" title="IHashable\&lt; std::basic\l_string\&lt; char \&gt; \&gt;" alt="" coords="15,95,179,136"/>
+<area shape="rect" id="node3" href="$classIComparable.html" title="IComparable\&lt; std::basic\l_string\&lt; char \&gt; \&gt;" alt="" coords="5,5,188,47"/>
+<area shape="rect" id="node4" href="$classICopyable.html" title="ICopyable\&lt; String \&gt;" alt="" coords="203,102,358,129"/>
+</map>

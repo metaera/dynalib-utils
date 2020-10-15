@@ -1,0 +1,31 @@
+<map id="/github/workspace/src/Utilities/KAML/Manager.cpp" name="/github/workspace/src/Utilities/KAML/Manager.cpp">
+<area shape="rect" id="node7" href="$DynaHashMapImpl_8h.html" title="../DynaHashMapImpl.h" alt="" coords="239,169,409,196"/>
+<area shape="rect" id="node33" href="$Token_8h.html" title="../Parser/Token.h" alt="" coords="2149,244,2277,271"/>
+<area shape="rect" id="node34" href="$Tokenizer_8h.html" title="../Parser/Tokenizer.h" alt="" coords="1822,244,1973,271"/>
+<area shape="rect" id="node37" href="$ErrorContext_8h.html" title="../Parser/ErrorContext.h" alt="" coords="2315,95,2487,121"/>
+<area shape="rect" id="node38" href="$DynaLogger_8h.html" title="../DynaLogger.h" alt="" coords="987,244,1109,271"/>
+<area shape="rect" id="node43" href="$File_8h.html" title="File.h" alt="" coords="1253,169,1309,196"/>
+<area shape="rect" id="node47" href="$KAMLParser_8h.html" title="KAMLParser.h" alt="" coords="1945,169,2055,196"/>
+<area shape="rect" id="node48" href="$JSONParser_8h.html" title="JSONParser.h" alt="" coords="2181,169,2286,196"/>
+<area shape="rect" id="node49" href="$JSONGenerator_8h.html" title="JSONGenerator.h" alt="" coords="1684,169,1815,196"/>
+<area shape="rect" id="node50" href="$Manager_8h.html" title="Manager.h" alt="" coords="1441,95,1530,121"/>
+<area shape="rect" id="node9" href="$BitManip_8h.html" title="BitManip.h" alt="" coords="43,319,133,345"/>
+<area shape="rect" id="node10" href="$DynaAllocImpl_8h.html" title="DynaAllocImpl.h" alt="" coords="157,244,286,271"/>
+<area shape="rect" id="node15" href="$CheckForError_8h.html" title="CheckForError.h" alt="" coords="259,319,383,345"/>
+<area shape="rect" id="node18" href="$DynaHashMap_8h.html" title="DynaHashMap.h" alt="" coords="997,319,1125,345"/>
+<area shape="rect" id="node11" href="$DynaAlloc_8h.html" title="DynaAlloc.h" alt="" coords="365,617,465,644"/>
+<area shape="rect" id="node14" href="$TypeDefs_8h.html" title="TypeDefs.h" alt="" coords="918,692,1013,719"/>
+<area shape="rect" id="node20" href="$Exception_8h.html" title="Exception.h" alt="" coords="939,393,1037,420"/>
+<area shape="rect" id="node28" href="$IHashable_8h.html" title="IHashable.h" alt="" coords="1053,543,1152,569"/>
+<area shape="rect" id="node29" href="$ICopyable_8h.html" title="ICopyable.h" alt="" coords="1308,692,1407,719"/>
+<area shape="rect" id="node21" href="$String_8h.html" title="String.h" alt="" coords="1664,468,1736,495"/>
+<area shape="rect" id="node30" href="$HashCoder_8h.html" title="HashCoder.h" alt="" coords="2107,543,2211,569"/>
+<area shape="rect" id="node31" href="$Utils_8h.html" title="Utils.h" alt="" coords="1227,543,1291,569"/>
+<area shape="rect" id="node32" href="$DynaList_8h.html" title="DynaList.h" alt="" coords="1312,617,1403,644"/>
+<area shape="rect" id="node35" href="$IntWrapper_8h.html" title="../IntWrapper.h" alt="" coords="1755,319,1871,345"/>
+<area shape="rect" id="node36" href="$IndexConfig_8h.html" title="IndexConfig.h" alt="" coords="1811,393,1922,420"/>
+<area shape="rect" id="node41" href="$DynaHashSet_8h.html" title="DynaHashSet.h" alt="" coords="824,319,947,345"/>
+<area shape="rect" id="node42" href="$FileUtils_8h.html" title="FileUtils.h" alt="" coords="662,319,749,345"/>
+<area shape="rect" id="node45" href="$Node_8h.html" title="../Graph/Node.h" alt="" coords="1523,244,1645,271"/>
+<area shape="rect" id="node46" href="$TimeUtils_8h.html" title="../TimeUtils.h" alt="" coords="1621,319,1731,345"/>
+</map>

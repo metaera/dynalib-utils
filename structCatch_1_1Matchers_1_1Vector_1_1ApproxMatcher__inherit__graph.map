@@ -1,0 +1,5 @@
+<map id="Catch::Matchers::Vector::ApproxMatcher&lt; T, AllocComp, AllocMatch &gt;" name="Catch::Matchers::Vector::ApproxMatcher&lt; T, AllocComp, AllocMatch &gt;">
+<area shape="rect" id="node2" href="$structCatch_1_1Matchers_1_1Impl_1_1MatcherBase.html" title="Catch::Matchers::Impl\l::MatcherBase\&lt; std::vector\l\&lt; T, AllocMatch \&gt; \&gt;" alt="" coords="223,31,421,87"/>
+<area shape="rect" id="node3" href="$classCatch_1_1Matchers_1_1Impl_1_1MatcherUntypedBase.html" title="Catch::Matchers::Impl\l::MatcherUntypedBase" alt="" coords="5,5,175,47"/>
+<area shape="rect" id="node4" href="$structCatch_1_1Matchers_1_1Impl_1_1MatcherMethod.html" title="Catch::Matchers::Impl\l::MatcherMethod\&lt; T \&gt;" alt="" coords="6,71,174,112"/>
+</map>

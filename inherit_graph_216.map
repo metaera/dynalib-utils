@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classICopyable.html" title="ICopyable\&lt; DynaBTreeNode\l\&lt; K \&gt; \&gt;" alt="" coords="5,27,212,69"/>
+<area shape="rect" id="node2" href="$classDynaBTreeNode.html" title="Base Class for B&#45;Tree nodes. " alt="" coords="260,35,425,61"/>
+<area shape="rect" id="node3" href="$classDynaBTreeInnerNode.html" title="B&#45;Tree Inner Node. " alt="" coords="473,5,672,32"/>
+<area shape="rect" id="node4" href="$classDynaBTreeLeafNode.html" title="B&#45;Tree Leaf Node. " alt="" coords="490,57,655,98"/>
+</map>

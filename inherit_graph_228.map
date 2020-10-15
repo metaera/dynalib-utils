@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classIComparable.html" title="IComparable\&lt; DynaOutputSink \&gt;" alt="" coords="5,31,247,57"/>
+<area shape="rect" id="node2" href="$classIHashable.html" title="IHashable\&lt; DynaOutputSink \&gt;" alt="" coords="295,31,517,57"/>
+<area shape="rect" id="node3" href="$classDynaOutputSink.html" title="DynaOutputSink" alt="" coords="565,56,693,83"/>
+<area shape="rect" id="node4" href="$classDynaOutputSinkConsole.html" title="DynaOutputSinkConsole" alt="" coords="741,5,921,32"/>
+<area shape="rect" id="node5" href="$classDynaOutputSinkError.html" title="DynaOutputSinkError" alt="" coords="752,56,911,83"/>
+<area shape="rect" id="node6" href="$classDynaOutputSinkFile.html" title="DynaOutputSinkFile" alt="" coords="756,107,907,133"/>
+<area shape="rect" id="node7" href="$classICopyable.html" title="ICopyable\&lt; DynaOutputSink \&gt;" alt="" coords="295,81,517,108"/>
+</map>

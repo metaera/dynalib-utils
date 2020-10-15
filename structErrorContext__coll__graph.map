@@ -1,0 +1,6 @@
+<map id="ErrorContext" name="ErrorContext">
+<area shape="rect" id="node2" href="$classString.html" title="String" alt="" coords="159,187,219,213"/>
+<area shape="rect" id="node3" href="$classIHashable.html" title="IHashable\&lt; std::basic\l_string\&lt; char \&gt; \&gt;" alt="" coords="15,96,179,137"/>
+<area shape="rect" id="node4" href="$classIComparable.html" title="IComparable\&lt; std::basic\l_string\&lt; char \&gt; \&gt;" alt="" coords="5,5,188,47"/>
+<area shape="rect" id="node5" href="$classICopyable.html" title="ICopyable\&lt; String \&gt;" alt="" coords="203,103,358,130"/>
+</map>
