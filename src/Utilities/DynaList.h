@@ -133,6 +133,7 @@ public:
     void deleteItem(int index);
     void deleteItems(int frIndex, int toIndex);
     void push(T* value);
+    void pushLast(T* value);
     T*   pop();
     T*   popLast();
     DynaListIter<T> begin() const;

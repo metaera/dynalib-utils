@@ -470,6 +470,10 @@ template <class T> void DynaList<T>::push(T* value) {
     insert(0, value);
 }
 
+template <class T> void DynaList<T>::pushLast(T* value) {
+    append(value);
+}
+
 template <class T> T* DynaList<T>::pop() {
     if (_count > 0)
         return remove(0);
